@@ -1,0 +1,746 @@
+package inteprete;
+import java.util.LinkedList;
+import ast.general.NodoAST;
+import ast.AST;
+import java_cup.runtime.Symbol;
+
+import ast.expresiones.Literal;
+import entorno.Tipo;
+import ast.general.Instruccion;
+import ast.general.Expresion;
+import ast.instrucciones.Bloque;
+import ast.instrucciones.Declaracion;
+import ast.instrucciones.PrintTabla;
+import ast.instrucciones.Asignacion;
+import ast.expresiones.Identificador;
+import ast.expresiones.operaciones.Aritmetica;
+import ast.expresiones.operaciones.Operacion.Operador;
+import entorno.Tipo.Tipos; 
+import ast.instrucciones.Print;
+import ast.expresiones.operaciones.OperadorPost;
+import ast.expresiones.operaciones.Relacional;
+import ast.expresiones.operaciones.Logica;
+import ast.expresiones.operaciones.Ternaria;
+import ast.instrucciones.If;
+import ast.instrucciones.While;
+import ast.instrucciones.Break;
+import ast.instrucciones.For;
+import ast.expresiones.Var;
+import ast.expresiones.IniciarArreglo;
+import ast.expresiones.generarArrreglo;
+import ast.instrucciones.fantasma;
+import ast.Nativo.Modificador;
+import ast.instrucciones.Clase;
+import ast.instrucciones.Funcion;
+import ast.instrucciones.Constructor;
+import ast.Nativo.Modificador.TipoMod;
+import entorno.Simbolo;
+import entorno.Simbolo.Rol;
+import ast.expresiones.Llama;
+import ast.expresiones.Return;
+import ast.expresiones.Instancia;
+import java.util.LinkedList;
+import ast.expresiones.Acceso;
+import ast.expresiones.AccesoAsig;
+
+parser code
+{:
+public static AST arbol;
+
+    /**Metodo al que se llama automáticamente ante algún error sintactico.*/
+    public void syntax_error(Symbol s){
+        System.out.println("Error en la Línea "+  (s.right)+ " Columna "+s.left +". Identificador "+
+        s.value  +" no reconocido." );
+    }
+
+    /**Metodo al que se llama en el momento en que ya no es posible una recuperación de
+    errores.*/
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        System.out.println("Error en la Línea "  +(s.right)+ " Columna "+s.left+". +Identificador " +
+        s.value + " no reconocido.");
+    }
+:}
+
+//Creacion de Objetos
+action code
+{:
+
+:}
+//PALABRAS RESERVADAS
+terminal Tclass,Textends,Tpublic,Tprotected,Tprivate,Tabstract,Tstatic,Tfinal,Tvoid;
+terminal Timport,Treturn,Tthis,Tsuper;
+terminal printtabla,print;
+terminal ttrue,tfalse;
+terminal tint,tchar,tbool,tstring,tdouble;
+terminal Tif,Telse,Twhile,Tbreak,Tnew,Tfor;
+
+//SIMBOLOS
+terminal String menor_que,mayor_que,diferente_que,igual_que, menor_igual,mayor_igual;
+terminal String Tor,Tand,Tnot,xor;
+terminal String dospuntos,interrogacion;
+terminal mas,menos,por,div,pot,mod,incremento,decremento;
+terminal para,parc,igual,pcoma,llavea,llavec,coma,corc,cora;
+terminal fantasma,Tpunto;
+
+//SIMBOLOS DONDE IMPORTA SU VALOR
+terminal Double decimal;
+terminal Integer num;
+terminal char CHAR;
+terminal String ID,CAD;
+terminal String UMENOS;
+
+//NO TERMINALES CON TIPO
+non terminal S;
+non terminal Instruccion INICIAR;
+non terminal LinkedList<NodoAST> BLOQUE;
+non terminal NodoAST L;
+non terminal Instruccion DEC;
+non terminal Tipo TIPO;
+non terminal Instruccion ASIGNACION;
+non terminal Instruccion SENTENCIA_IF;
+
+non terminal Instruccion PRINTTABLA;
+non terminal Instruccion PRINT;
+non terminal Expresion EXPRESION;
+non terminal Expresion POSTFIJO;
+non terminal Instruccion SENTENCIA_WHILE;
+non terminal Instruccion SENTENCIA_BREAK;
+non terminal Instruccion SENTENCIA_FOR;
+non terminal Expresion SENTENCIA_LLAMADA;
+non terminal Expresion SENTENCIA_RETURN;
+non terminal Var VAR;
+non terminal LinkedList<Var> LISTA_VAR;
+non terminal LinkedList<Expresion> DIMENSION;
+non terminal LISTA_CORCHETES;
+non terminal Instruccion FOR_INI;
+//NUEVAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+non terminal LinkedList<NodoAST> LISTACLASES;
+non terminal Clase CLASE;
+non terminal LISTAIMPORT;
+non terminal LinkedList<NodoAST> B;
+non terminal IMPORT;
+non terminal Expresion INI_ARRAY;
+non terminal ini;
+non terminal Funcion method_declaration;
+non terminal Funcion method_header;
+non terminal Modificador method_modifier;
+non terminal IMPORT_NULL;
+non terminal LinkedList<Modificador> MODIFICADORES_NULL;
+non terminal LinkedList<Simbolo> formal_parameters;
+non terminal Integer method_declarator;
+non terminal NodoAST class_body_dec;
+non terminal LinkedList<NodoAST> ELEMENTOS_CLASE;
+non terminal Constructor constructor_declaration;
+non terminal LinkedList<Simbolo> PARAMETERS_NULL;
+non terminal Simbolo formal_parameter;
+non terminal NodoAST ATRIBUTOS;
+non terminal Simbolo variable_declarator_id;
+
+non terminal Declaracion DECLARACION_ATRIBUTO;
+
+non terminal Expresion VARIABLE_INICIALIZAR;
+non terminal Expresion LISTAASIGNACION;
+
+precedence right igual;
+precedence right interrogacion,dospuntos;
+precedence left Tor;
+precedence left Tand;
+precedence left xor;
+precedence left igual_que,diferente_que;
+precedence left menor_que,mayor_que,menor_igual,mayor_igual;
+precedence left mas,menos;
+precedence left por,div,mod;
+precedence right pot; 
+precedence right Tnot,UMENOS,incremento,decremento;
+precedence left Tpunto;
+
+start with  S;
+
+S ::= ini {:System.out.println("TERMINO GRAMATICA");:};
+
+ini ::= IMPORT_NULL LISTACLASES:e
+    {:
+        parser.arbol = new AST(e);
+    :};
+LISTACLASES ::= LISTACLASES:a CLASE:b
+    {:
+        RESULT = a;
+        RESULT.addLast(b);
+    :}
+    |CLASE:e
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(e);        
+    :};
+
+ELEMENTOS_CLASE ::= ELEMENTOS_CLASE:a class_body_dec:b
+    {:
+        RESULT = a;
+        RESULT.addLast(b);
+    :}
+    |class_body_dec:e
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(e);        
+    :};
+class_body_dec ::= CLASE:a
+    {:
+        RESULT = a;
+    :}    
+    |constructor_declaration:a
+    {:  
+        RESULT = a;
+    :}
+    |method_declaration:a
+    {:
+        RESULT = a;
+    :}
+    |ATRIBUTOS:a
+    {:
+        RESULT = a;
+    :};
+
+ATRIBUTOS ::= MODIFICADORES_NULL TIPO:t DECLARACION_ATRIBUTO:a pcoma
+    {:
+        a.setTipo(t);
+        RESULT = a;
+    :};
+
+DECLARACION_ATRIBUTO ::= 
+    LISTA_VAR:a igual VARIABLE_INICIALIZAR:b
+    {:
+        RESULT = new Declaracion(a,b);
+    :}
+    |LISTA_VAR:a
+    {:
+        RESULT = new Declaracion(a);
+    :}; 
+
+VARIABLE_INICIALIZAR ::= 
+    EXPRESION:a
+    {:RESULT = a;:};
+
+CLASE ::= MODIFICADORES_NULL:a Tclass ID:b llavea ELEMENTOS_CLASE:c llavec
+    {:
+        LinkedList<Instruccion> declaraciones = new LinkedList();
+        LinkedList<Funcion> funciones =new LinkedList();
+        LinkedList<Constructor> constructores = new LinkedList();
+        LinkedList<Clase> jerarqua = new LinkedList();
+        for(NodoAST nodo : c)
+        {
+            if(nodo instanceof Funcion)
+            {
+                funciones.addLast((Funcion)nodo);
+            }
+            else if(nodo instanceof Declaracion)
+            {
+                declaraciones.addLast((Declaracion)nodo);
+            }
+            else if(nodo instanceof Asignacion)
+            {
+                declaraciones.addLast((Asignacion)nodo);
+            }
+            else if(nodo instanceof Constructor)
+            {
+                constructores.addLast((Constructor)nodo);
+            }
+            else if(nodo instanceof Clase)
+            {
+                jerarqua.addLast((Clase)nodo);
+            }
+        }
+        RESULT = new Clase(Rol.CLASE,a,declaraciones,funciones,constructores,b.toString(),jerarqua);
+    :}
+    |MODIFICADORES_NULL:a Tclass ID:b Textends ID:ext llavea ELEMENTOS_CLASE:c llavec
+    {:
+        LinkedList<Instruccion> declaraciones = new LinkedList();
+        LinkedList<Funcion> funciones =new LinkedList();
+        LinkedList<Constructor> constructores = new LinkedList();
+        LinkedList<Clase> jerarqua = new LinkedList();
+        for(NodoAST nodo : c)
+        {
+            if(nodo instanceof Funcion)
+            {
+                funciones.addLast((Funcion)nodo);
+            }
+            else if(nodo instanceof Declaracion)
+            {
+                declaraciones.addLast((Declaracion)nodo);
+            }
+            else if(nodo instanceof Asignacion)
+            {
+                declaraciones.addLast((Asignacion)nodo);
+            }
+            else if(nodo instanceof Constructor)
+            {
+                constructores.addLast((Constructor)nodo);
+            }
+            else if(nodo instanceof Clase)
+            {
+                jerarqua.addLast((Clase)nodo);
+            }
+        }
+        RESULT = new Clase(a,declaraciones,funciones,constructores,b.toString(),jerarqua,ext);
+    :};
+
+
+IMPORT_NULL ::= LISTAIMPORT
+|;
+
+LISTAIMPORT::= LISTAIMPORT IMPORT
+|IMPORT;
+
+IMPORT ::= Timport CAD pcoma;
+
+constructor_declaration ::= MODIFICADORES_NULL:a ID:b  para PARAMETERS_NULL:c parc llavea BLOQUE:d llavec
+    {:
+        RESULT = new Constructor(Rol.CONSTRUCTOR,a,c,d,b.toString());
+    :};
+
+PARAMETERS_NULL ::= 
+    formal_parameters:b
+    {:
+       RESULT = b;
+    :}
+    |/*VACIO*/
+    {:
+       RESULT = new LinkedList();
+    :};
+
+formal_parameters ::= 
+    formal_parameters:a coma formal_parameter:b
+    {:  
+        RESULT = a;
+        RESULT.addLast(b);
+    :}
+    | formal_parameter:a
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(a);
+    :};
+
+formal_parameter ::= 
+    Tfinal TIPO:a variable_declarator_id:b
+    {:
+        RESULT = new Simbolo(b.getIdentificador(),b.getRol(),a);
+    :}
+    | TIPO:a variable_declarator_id:b
+    {:
+        RESULT = new Simbolo(b.getIdentificador(),b.getRol(),a);
+    :};
+
+variable_declarator_id ::= 
+    ID:a cora corc
+    {:
+        RESULT = new Simbolo(a.toString(),Rol.ARREGLO);
+    :}
+    |ID:a
+    {:
+        RESULT = new Simbolo(a.toString(),Rol.VARIABLE);
+    :};
+
+method_declaration ::= method_header:a llavea BLOQUE:b llavec
+    {:
+        RESULT = a;
+        RESULT.setSentencias(b);
+    :}
+| method_header:a pcoma
+    {:
+        RESULT = a;
+    :};
+
+method_header ::= 
+    |MODIFICADORES_NULL:mod TIPO:tip method_declarator:arr ID:id para formal_parameters:par parc
+    {:
+        RESULT = new Funcion(id,Rol.FUNCION,tip,mod,par,arr);
+    :}
+    |MODIFICADORES_NULL:mod TIPO:tip method_declarator:arr ID:id para parc
+    {:
+        RESULT = new Funcion(id,Rol.FUNCION,tip,mod,arr);
+    :}
+    |MODIFICADORES_NULL:mod TIPO:tip ID:id para formal_parameters:par parc
+    {:
+        RESULT = new Funcion(id,Rol.FUNCION,tip,mod,par,0);
+    :}
+    |MODIFICADORES_NULL:mod TIPO:tip ID:id para parc
+    {:
+        Rol rol = id.equalsIgnoreCase("main") ? Rol.MAIN : Rol.FUNCION;
+        RESULT = new Funcion(id,rol,tip,mod,0);
+    :};
+
+method_declarator ::= 
+    method_declarator:a cora corc
+    {:
+       RESULT = a + 1;
+    :}
+    |cora corc
+    {:
+       RESULT = 1;
+    :};
+
+MODIFICADORES_NULL ::= 
+    method_modifier:a method_modifier:b
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(a);
+        RESULT.addLast(b);
+
+    :}
+    |method_modifier:a
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(a);
+    :}
+    |/*VACIO*/
+    {:
+       RESULT = new LinkedList();
+    :};
+
+method_modifier ::= 
+    Tpublic         {: RESULT = new Modificador(TipoMod.PUBLIC); :}
+    |Tprotected     {: RESULT = new Modificador(TipoMod.PROTECTED); :}
+    |Tprivate       {: RESULT = new Modificador(TipoMod.PRIVATE); :}
+    |Tabstract      {: RESULT = new Modificador(TipoMod.ABSTRACT); :}
+    |Tstatic        {: RESULT = new Modificador(TipoMod.STATIC); :}
+    |Tfinal         {: RESULT = new Modificador(TipoMod.FINAL); :};
+
+DEC ::=
+    TIPO:ti LISTA_VAR:i igual EXPRESION:res pcoma
+    {: 
+        RESULT = new Declaracion(ti, i,res);        
+    :} 
+    |TIPO:ti LISTA_VAR:i pcoma
+    {: 
+        RESULT = new Declaracion(ti, i);        
+    :}
+    |ID:i ID:ii igual EXPRESION:res pcoma
+    {:
+        RESULT = new Declaracion(new Tipo(i),res, ii);   
+    :}
+    |ID:i ID:ii pcoma
+    {:
+        RESULT = new Declaracion(new Tipo(i),ii); 
+    :}
+   ;
+
+LISTA_VAR::= LISTA_VAR:a VAR:b
+    {:  
+        RESULT = a;
+        RESULT.addLast(b);
+    :}
+|VAR:a
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(a);
+    :};
+
+VAR ::= ID:id 
+    {:
+        RESULT = new Var(id);
+    :} 
+|ID:id LISTA_CORCHETES:l    
+    {:
+        RESULT = new Var(id,(int)l);
+    :};
+
+LISTA_CORCHETES ::= LISTA_CORCHETES:l cora corc
+    {:
+        int r = (int)l+1;
+        RESULT = r;
+    :}
+    |cora corc
+    {:
+        int r = 1;
+        RESULT = r;
+    :};
+
+INICIAR::= llavea BLOQUE:e llavec         
+    {:        
+        RESULT = new Bloque(e);
+    :};
+
+BLOQUE ::= BLOQUE:a L:b
+    {:
+        RESULT = a;
+        RESULT.addLast(b);
+    :}
+|L:a
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(a);
+    :};
+
+L ::=  fantasma
+    {:
+        RESULT = new fantasma();
+    :}
+|SENTENCIA_RETURN:ins pcoma
+    {:
+       RESULT = ins;
+    :}
+|SENTENCIA_WHILE:ins
+    {:
+        RESULT = ins;
+    :}
+|SENTENCIA_FOR:ins
+    {:
+        RESULT = ins;
+    :}
+|SENTENCIA_BREAK:ins
+    {:
+        RESULT = ins;
+    :}
+|SENTENCIA_IF:ins
+    {:
+        RESULT = ins;
+    :}
+|DEC:ins
+    {:
+        RESULT = ins;
+    :}
+|PRINTTABLA:ins
+    {:
+       RESULT = ins;
+    :}
+|INICIAR:e
+    {:
+        RESULT = e;
+    :}
+|ASIGNACION:e
+    {:
+        RESULT = e;
+    :}
+|PRINT:e
+    {:
+        RESULT = e;
+    :}
+|POSTFIJO:e pcoma
+    {:
+        RESULT = e;
+    :}
+|SENTENCIA_LLAMADA:e
+    {:
+        RESULT =  e;        
+    :};
+
+SENTENCIA_LLAMADA ::= LISTAASIGNACION:a pcoma
+    {:
+        RESULT = (Expresion) a;
+    :};
+
+SENTENCIA_FOR ::= Tfor para FOR_INI:a EXPRESION:b pcoma EXPRESION:c parc llavea BLOQUE:d llavec
+    {:
+        RESULT = new For(d, b,a,c);
+    :};
+
+FOR_INI::= DEC:a    
+    {:
+        RESULT = a;
+    :}
+|ASIGNACION:a       
+    {:
+        RESULT = a;
+    :};
+
+PRINT ::= print para EXPRESION:res parc pcoma 
+    {:
+        RESULT = new Print(res);
+    :};
+
+PRINTTABLA ::= printtabla para parc pcoma 
+    {:
+        RESULT = new PrintTabla();
+    :};
+
+ASIGNACION ::= LISTAASIGNACION:i igual EXPRESION:res pcoma
+    {:          
+        RESULT = new Asignacion(i,res);
+    :};
+
+LISTAASIGNACION::= 
+    LISTAASIGNACION:a Tpunto LISTAASIGNACION:b
+    {:      
+        RESULT = new AccesoAsig(a,b);
+    :}
+    |ID:valor
+    {:
+        RESULT =  new Identificador(valor.toString(),true);
+    :}
+    |Tthis
+    |Tsuper
+    |ID:a para parc
+    {:
+        RESULT = new Llama(a);
+    :}
+    |ID:a para B:b parc
+    {:
+        RESULT = new Llama(a,b);
+    :};
+
+SENTENCIA_BREAK::= Tbreak pcoma
+    {:
+        RESULT = new Break();
+    :};
+
+SENTENCIA_WHILE::=  Twhile para EXPRESION:a parc llavea BLOQUE:b llavec
+    {:
+        RESULT = new While(b,a);
+    :};
+
+SENTENCIA_IF ::= Tif para EXPRESION:a parc llavea BLOQUE:b llavec
+    {:
+        RESULT = new If(b,a);
+    :}
+    |Tif para EXPRESION:a parc llavea BLOQUE:b llavec Telse llavea BLOQUE:c llavec
+    {:
+
+        RESULT = new If(b,a,c);
+    :}
+    |Tif para EXPRESION:a parc llavea BLOQUE:b llavec Telse SENTENCIA_IF:c
+    {:
+        RESULT = new If(b,a,c);
+    :};
+
+POSTFIJO ::= ID:valor incremento 
+    {:
+        RESULT = new OperadorPost(new Identificador(valor.toString(),false),true);
+    :}
+|ID:valor decremento
+    {:
+        RESULT = new OperadorPost(new Identificador(valor.toString(),false),false);
+    :};
+
+SENTENCIA_RETURN ::= 
+    Treturn EXPRESION:a
+    {:
+        RESULT = new Return(a);
+    :}
+    |Treturn
+    {:
+        RESULT = new Return();
+    :};
+
+DIMENSION::= DIMENSION:a cora EXPRESION:b corc
+    {:
+        RESULT = a;
+        RESULT.addLast(b);
+    :}
+|cora EXPRESION:a corc
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(a);
+    :};
+ 
+INI_ARRAY ::= llavea B:a llavec         
+    {:
+        RESULT = new IniciarArreglo(a);
+    :}
+|Tnew TIPO:t DIMENSION:res              
+    {:
+        RESULT = new generarArrreglo(res,t);
+    :};
+
+B ::= B:a coma EXPRESION:b
+    {:
+        RESULT = a;
+        RESULT.addLast(b);
+    :}
+|EXPRESION:a
+    {:
+        RESULT = new LinkedList();
+        RESULT.addLast(a);
+    :};
+
+TIPO ::= 
+    tint        {: RESULT = new Tipo(Tipos.INT); :}
+    |tbool      {: RESULT = new Tipo(Tipos.BOOL); :}
+    |tchar      {: RESULT = new Tipo(Tipos.CHAR); :}
+    |tdouble    {: RESULT = new Tipo(Tipos.DOUBLE); :}
+    |tstring    {: RESULT = new Tipo(Tipos.STRING); :}
+    |Tvoid      {: RESULT = new Tipo(Tipos.VOID); :} ;
+
+
+EXPRESION ::= INI_ARRAY:i                   {:RESULT = i;:}
+    |menos EXPRESION                        {:RESULT=null;:}%prec UMENOS    
+    | EXPRESION:a mas EXPRESION:b           {:RESULT = new Aritmetica(a, b, Operador.SUMA);:}
+    | EXPRESION:a menos EXPRESION:b         {:RESULT = new Aritmetica(a, b, Operador.RESTA);:}
+    | EXPRESION:a por EXPRESION:b           {:RESULT = new Aritmetica(a, b, Operador.MULTIPLICACION);:}
+    | EXPRESION:a div EXPRESION:b           {:RESULT = new Aritmetica(a, b, Operador.DIVISION);:}
+    | EXPRESION:a mod EXPRESION:b           {:RESULT = new Aritmetica(a, b, Operador.MODULO);:}
+    | pot para EXPRESION:a coma EXPRESION:b parc {:RESULT = new Aritmetica(a, b, Operador.POTENCIA);:}
+    
+    | EXPRESION:a mayor_que EXPRESION:b     {:RESULT = new Relacional(a, b, Operador.MAYOR_QUE);:}
+    | EXPRESION:a menor_que EXPRESION:b     {:RESULT = new Relacional(a, b, Operador.MENOR_QUE);:}
+    | EXPRESION:a igual_que EXPRESION:b     {:RESULT = new Relacional(a, b, Operador.IGUAL_IGUAL);:}
+    | EXPRESION:a mayor_igual EXPRESION:b   {:RESULT = new Relacional(a, b, Operador.MAYOR_IGUAL);:}
+    | EXPRESION:a menor_igual EXPRESION:b   {:RESULT = new Relacional(a, b, Operador.MENOR_IGUAL);:}
+    | EXPRESION:a diferente_que EXPRESION:b {:RESULT = new Relacional(a, b, Operador.DIFERENTE_QUE);:}
+
+    | EXPRESION:a Tor EXPRESION:b           {:RESULT = new Logica(a, b, Operador.OR);:}
+    | EXPRESION:a xor EXPRESION:b           {:RESULT = new Logica(a, b, Operador.XOR);:}
+    | EXPRESION:a Tand EXPRESION:b          {:RESULT = new Logica(a, b, Operador.AND);:}
+    | Tnot EXPRESION                        {:RESULT= null; :}%prec Tnot
+    | EXPRESION:a interrogacion EXPRESION:b dospuntos EXPRESION:c   {:RESULT= new Ternaria(a, b,c);:}%prec interrogacion
+|para EXPRESION:a parc
+    {:
+        RESULT =a;
+    :}
+|EXPRESION:a Tpunto EXPRESION:b
+    {:     
+        RESULT = new Acceso(a,b);
+
+    :}
+|Tnew ID:a para B:b parc
+    {:
+        RESULT = new Instancia(a,b);
+    :}
+|Tnew ID:a para parc
+    {:
+        RESULT = new Instancia(a);
+    :}
+|ID:a para parc
+    {:
+        RESULT = new Llama(a);
+    :}
+|ID:a para B:b parc
+    {:
+        RESULT = new Llama(a,b);
+    :}
+|num:valor 
+    {: 
+        RESULT = new Literal((Object)valor, new Tipo(Tipos.INT)); 
+    :}
+|decimal:valor 
+    {: 
+        RESULT = new Literal((Object)valor, new Tipo(Tipos.DOUBLE)); 
+    :}
+|CHAR:valor
+    {:
+        RESULT = new Literal((Object)valor, new Tipo(Tipos.CHAR));
+    :}
+|CAD:valor
+    {:
+        RESULT = new Literal((Object)valor, new Tipo(Tipos.STRING));
+    :}
+|ttrue
+    {:
+        RESULT = new Literal((Object)true, new Tipo(Tipos.BOOL));
+    :}
+|tfalse
+    {:
+        RESULT = new Literal((Object)false, new Tipo(Tipos.BOOL));
+    :}
+|ID:valor DIMENSION:a
+    {:
+        RESULT =  new Identificador(valor.toString(),a);
+    :}
+|POSTFIJO:p
+    {:
+        RESULT = p;
+    :}
+|ID:valor
+    {:
+        RESULT =  new Identificador(valor.toString(),false);
+    :};
+

@@ -1,0 +1,129 @@
+
+/*--------------------------------- CODIGO DE USUARIO -------------------------------*/
+// PAQUETES E IMPORTACIONES
+package inteprete;
+import java_cup.runtime.*;
+import java.util.ArrayList;
+/*--------------------------------- OPCIONES Y DECLARACIONES -------------------------------*/
+
+%%
+%{
+    //codigo de usuario sintaxis java
+    //public static ArrayList<TError> errorLexico = new ArrayList();
+%}
+
+// Directivas de Jflex
+%class Lexico
+%cupsym Simbolos
+%cup
+%char
+%full
+%ignorecase
+%line
+%unicode
+%column
+%public
+
+// EXPRESIONES REGUALES
+
+numero = [0-9]+
+decimal = [0-9]+("."[  |0-9]+)?
+LETRA = [a-zA-Z]
+ID = {LETRA}({LETRA}|{numero}|"_")*
+CHAR = [\']{LETRA}[\']
+CAD = [\"]([^\"\n]|(\\\"))*[\"]
+COMENTUNILINEA =("//".*\r\n)|("//".*\n)|("//".*\r)
+COMENTMULTILINEA ="/*""/"*([^*/]|[^*]"/"|"*"[^/])*"*"*"*/"
+// ESTADOS
+
+
+%%
+{COMENTUNILINEA} {} 
+{COMENTMULTILINEA} {}  
+/*--------------------------------- REGLAS LEXICAS -------------------------------*/
+
+"+"     { return new Symbol(Simbolos.mas, yycolumn,yyline, yytext()); }
+"++"     { return new Symbol(Simbolos.incremento, yycolumn,yyline, yytext()); }
+"--"     { return new Symbol(Simbolos.decremento, yycolumn,yyline, yytext()); }
+"-"     { return new Symbol(Simbolos.menos, yycolumn,yyline, yytext()); }
+"*"     { return new Symbol(Simbolos.por, yycolumn,yyline, yytext()); }
+"/"     { return new Symbol(Simbolos.div, yycolumn,yyline, yytext()); }
+"%"     { return new Symbol(Simbolos.mod, yycolumn,yyline, yytext()); }
+"pow"     { return new Symbol(Simbolos.pot, yycolumn,yyline, yytext()); }
+
+"{"     { return new Symbol(Simbolos.llavea, yycolumn,yyline, yytext()); }
+"["     { return new Symbol(Simbolos.cora, yycolumn,yyline, yytext()); }
+"]"     { return new Symbol(Simbolos.corc, yycolumn,yyline, yytext()); }
+
+"}"     { return new Symbol(Simbolos.llavec, yycolumn,yyline, yytext()); }
+"("     { return new Symbol(Simbolos.para, yycolumn,yyline, yytext()); }
+")"     { return new Symbol(Simbolos.parc, yycolumn,yyline, yytext()); }
+";"     { return new Symbol(Simbolos.pcoma, yycolumn,yyline, yytext()); }
+":"     { return new Symbol(Simbolos.dospuntos, yycolumn,yyline, yytext()); }
+"?"     { return new Symbol(Simbolos.interrogacion, yycolumn,yyline, yytext()); }
+","     { return new Symbol(Simbolos.coma, yycolumn,yyline, yytext()); }
+"."     { return new Symbol(Simbolos.Tpunto, yycolumn,yyline, yytext()); }
+
+"="     { return new Symbol(Simbolos.igual, yycolumn,yyline, yytext()); }
+
+">"   { return new Symbol(Simbolos.mayor_que, yycolumn,yyline, yytext()); }
+">="   { return new Symbol(Simbolos.mayor_igual, yycolumn,yyline, yytext()); }
+"<"   { return new Symbol(Simbolos.menor_que, yycolumn,yyline, yytext()); }
+"<="   { return new Symbol(Simbolos.menor_igual, yycolumn,yyline, yytext()); }
+
+"^"     { return new Symbol(Simbolos.xor, yycolumn,yyline, yytext()); }
+"||"   { return new Symbol(Simbolos.Tor, yycolumn,yyline, yytext()); }
+"&&"   { return new Symbol(Simbolos.Tand, yycolumn,yyline, yytext()); }
+"!"   { return new Symbol(Simbolos.Tnot, yycolumn,yyline, yytext()); }
+
+"=="   { return new Symbol(Simbolos.igual_que, yycolumn,yyline, yytext()); }
+"!="   { return new Symbol(Simbolos.diferente_que, yycolumn,yyline, yytext()); }
+
+"int"   { return new Symbol(Simbolos.tint, yycolumn,yyline, yytext()); }
+"double"   { return new Symbol(Simbolos.tdouble, yycolumn,yyline, yytext()); }
+"boolean"   { return new Symbol(Simbolos.tbool, yycolumn,yyline, yytext()); }
+"char"   { return new Symbol(Simbolos.tchar, yycolumn,yyline, yytext()); }
+"string"   { return new Symbol(Simbolos.tstring, yycolumn,yyline, yytext()); }
+
+"true"   { return new Symbol(Simbolos.ttrue, yycolumn,yyline, yytext()); }
+"false"   { return new Symbol(Simbolos.tfalse, yycolumn,yyline, yytext()); }
+
+"printtabla"   { return new Symbol(Simbolos.printtabla, yycolumn,yyline, yytext()); }
+"print"   { return new Symbol(Simbolos.print, yycolumn,yyline, yytext()); }
+
+"if"   { return new Symbol(Simbolos.Tif, yycolumn,yyline, yytext()); }
+"else"   { return new Symbol(Simbolos.Telse, yycolumn,yyline, yytext()); }
+"while"   { return new Symbol(Simbolos.Twhile, yycolumn,yyline, yytext()); }
+"break"   { return new Symbol(Simbolos.Tbreak, yycolumn,yyline, yytext()); }
+"new"   { return new Symbol(Simbolos.Tnew, yycolumn,yyline, yytext()); }
+"class"   { return new Symbol(Simbolos.Tclass, yycolumn,yyline, yytext()); }
+"extends"   { return new Symbol(Simbolos.Textends, yycolumn,yyline, yytext()); }
+"public"   { return new Symbol(Simbolos.Tpublic, yycolumn,yyline, yytext()); }
+"protected"   { return new Symbol(Simbolos.Tprotected, yycolumn,yyline, yytext()); }
+"private"   { return new Symbol(Simbolos.Tprivate, yycolumn,yyline, yytext()); }
+"abstract"   { return new Symbol(Simbolos.Tabstract, yycolumn,yyline, yytext()); }
+"static"   { return new Symbol(Simbolos.Tstatic, yycolumn,yyline, yytext()); }
+"final"   { return new Symbol(Simbolos.Tfinal, yycolumn,yyline, yytext()); }
+"for"   { return new Symbol(Simbolos.Tfor, yycolumn,yyline, yytext()); }
+"fantasma"   { return new Symbol(Simbolos.fantasma, yycolumn,yyline, yytext()); }
+"import"   { return new Symbol(Simbolos.Timport, yycolumn,yyline, yytext()); }
+"void"   { return new Symbol(Simbolos.Tvoid, yycolumn,yyline, yytext()); }
+"return"   { return new Symbol(Simbolos.Treturn, yycolumn,yyline, yytext()); }
+"this"   { return new Symbol(Simbolos.Tthis, yycolumn,yyline, yytext()); }
+"super"   { return new Symbol(Simbolos.Tsuper, yycolumn,yyline, yytext()); }
+
+
+// simbolos ER
+
+{numero}     {return new Symbol(Simbolos.num, yycolumn,yyline, new Integer(yytext())); }
+{decimal}     {return new Symbol(Simbolos.decimal, yycolumn,yyline, new Double(yytext())); }
+{ID}         {return new Symbol(Simbolos.ID, yycolumn,yyline,new String(yytext()));}
+{CHAR}         {return new Symbol(Simbolos.CHAR, yycolumn,yyline, yytext().charAt(1));}
+{CAD}    {return new Symbol(Simbolos.CAD,yyline,yychar, (yytext()).substring(1,yytext().length()-1));} 
+
+[ \t\r\f\n]+       { /* Se ignoran */}
+
+// ERRORES LEXICOS
+.   {   //TError datos = new TError(yytext(),"Error Lexico","Caracter invalido",yyline,yycolumn);
+        //errorLexico.add(datos);
+        System.out.println("Caracter Invalido: "+yytext()+" Linea: "+ (int)(yyline+1) +" Columna: "+yycolumn); }
