@@ -65,7 +65,7 @@ public class For extends Condicion implements Instruccion{
                 //hago el cambio en la iteracion
                 String id;
                 if (inicializacion instanceof Asignacion) {
-                    id  = ((Asignacion)inicializacion).getId().getVal();
+                    
                 }
                 else{
                     id  = ((Declaracion)inicializacion).getVars().get(0).getId();
