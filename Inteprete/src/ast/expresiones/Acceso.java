@@ -30,7 +30,7 @@ public class Acceso implements Expresion{
     
     @Override
     public Tipo getTipo(Entorno ent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               return null;
     }
 
     @Override

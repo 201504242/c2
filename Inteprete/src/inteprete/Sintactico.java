@@ -917,7 +917,7 @@ public static AST arbol;
 
     /**Metodo al que se llama automáticamente ante algún error sintactico.*/
     public void syntax_error(Symbol s){
-        System.out.println("Error en la Línea "+  (s.right)+ " Columna "+s.left +". Identificador "+
+        System.out.println("1) Error en la Línea "+  (s.right)+ " Columna "+s.left +". Identificador "+
         s.value  +" no reconocido." );
     }
 

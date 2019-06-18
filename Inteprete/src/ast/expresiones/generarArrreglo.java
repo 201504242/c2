@@ -63,14 +63,6 @@ public class generarArrreglo implements Expresion{
         }
         return arregloNuevo;
     }
-    
-    private Object gen(int indice){
-        if (indice == this.listaDimensiones.size() - 1) 
-        {
-            
-        }
-        return null;
-    }
 
     @Override
     public int linea() {

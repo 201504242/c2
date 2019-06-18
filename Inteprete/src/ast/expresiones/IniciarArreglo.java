@@ -18,9 +18,9 @@ import java.util.LinkedList;
  */
 public class IniciarArreglo implements Expresion{
   
-       int linea;
+    int linea;
     int col;
- LinkedList<NodoAST> lista;
+    LinkedList<NodoAST> lista;
 
 
     public IniciarArreglo(LinkedList<NodoAST> lista) {
