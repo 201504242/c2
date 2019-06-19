@@ -34,7 +34,8 @@ import org.fife.ui.rtextarea.RTextScrollPane;
  * @author p_ab1
  */
 public class Ventana extends javax.swing.JFrame {
-    
+    String nombreArchivo="compi";
+    ArrayList<String> listaArchivos = new ArrayList();
     /**
      * Creates new form Ventana
      */
@@ -44,33 +45,6 @@ public class Ventana extends javax.swing.JFrame {
 
 
     }
-    
-    private JPanel agregarArchivo(String texto){
-        JPanel cp = new JPanel(new BorderLayout());
-        RTextScrollPane sp = new RTextScrollPane(createTextArea(texto));
-        sp.setFoldIndicatorEnabled(true);
-        sp.setIconRowHeaderEnabled(true);
-        sp.setLineNumbersEnabled(true);
-        cp.add(sp);
-        return cp;
-    }
-    
-    private RSyntaxTextArea createTextArea(String texto) {
-	RSyntaxTextArea textArea = new RSyntaxTextArea(25, 70);
-        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        textArea.setCodeFoldingEnabled(true);
-	textArea.setTabSize(3);
-        textArea.setText(texto);
-	textArea.setCaretPosition(0);
-	textArea.requestFocusInWindow();
-	textArea.setMarkOccurrences(true);
-	textArea.setCodeFoldingEnabled(true);
-	textArea.setClearWhitespaceLinesEnabled(true);
-	textArea.setAntiAliasingEnabled(true);
-	textArea.setLineWrap(true);
-        textArea.setFadeCurrentLineHighlight(true);
-	return textArea;
-}
  
     public static Ventana getVentana(){
         return v;
@@ -95,6 +69,7 @@ public class Ventana extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         crear = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         guardar = new javax.swing.JMenuItem();
         guardarComo = new javax.swing.JMenuItem();
@@ -163,6 +138,14 @@ public class Ventana extends javax.swing.JFrame {
         });
         crear.add(jMenuItem2);
 
+        jMenuItem3.setText("Cerar Pestaña");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        crear.add(jMenuItem3);
+
         jMenuItem1.setText("Crear");
         crear.add(jMenuItem1);
 
@@ -219,9 +202,10 @@ public class Ventana extends javax.swing.JFrame {
             JFileChooser fileChooser = new JFileChooser();
             int result = fileChooser.showOpenDialog(this);
             File selectedFile = null;
-            String nombreArchivo="compi";
+            
             if (result == JFileChooser.APPROVE_OPTION) {
                 selectedFile = fileChooser.getSelectedFile();
+                listaArchivos.add(nombreArchivo);
                 nombreArchivo = selectedFile.getName();
             }  
             
@@ -278,14 +262,15 @@ public class Ventana extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error en el parser\n"+ex.getMessage(), "Ocurrion un Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_CorrerActionPerformed
-    
-    public void agregarConsola(String cad){
-        Consola.setText(Consola.getText()+""+ cad);
-    }
-    
-    public void agregarConsolaln(String cad){
-        Consola.setText(Consola.getText()+""+ cad + "\n");
-    }
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        if (pestanas.getTabCount() != 0 || listaArchivos.size() != 0 ) {
+            pestanas.remove(pestanas.getTabCount()-1);
+            listaArchivos.remove(listaArchivos.size() - 1);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -332,11 +317,46 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane pestanas;
     // End of variables declaration//GEN-END:variables
 
-   
+       
+    private JPanel agregarArchivo(String texto){
+        JPanel cp = new JPanel(new BorderLayout());
+        RTextScrollPane sp = new RTextScrollPane(createTextArea(texto));
+        sp.setFoldIndicatorEnabled(true);
+        sp.setIconRowHeaderEnabled(true);
+        sp.setLineNumbersEnabled(true);
+        cp.add(sp);
+        return cp;
+    }
+    
+    private RSyntaxTextArea createTextArea(String texto) {
+	RSyntaxTextArea textArea = new RSyntaxTextArea(25, 70);
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        textArea.setCodeFoldingEnabled(true);
+	textArea.setTabSize(3);
+        textArea.setText(texto);
+	textArea.setCaretPosition(0);
+	textArea.requestFocusInWindow();
+	textArea.setMarkOccurrences(true);
+	textArea.setCodeFoldingEnabled(true);
+	textArea.setClearWhitespaceLinesEnabled(true);
+	textArea.setAntiAliasingEnabled(true);
+	textArea.setLineWrap(true);
+        textArea.setFadeCurrentLineHighlight(true);
+	return textArea;
+    }
+            
+    public void agregarConsola(String cad){
+        Consola.setText(Consola.getText()+""+ cad);
+    }
+    
+    public void agregarConsolaln(String cad){
+        Consola.setText(Consola.getText()+""+ cad + "\n");
+    }
 }
