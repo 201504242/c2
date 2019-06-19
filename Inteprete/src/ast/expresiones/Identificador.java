@@ -24,32 +24,19 @@ public class Identificador implements Expresion{
     private LinkedList<Expresion> lista;
     int linea;
     int col;
-    boolean isObjecto;
+    boolean isAssign;
     
-    public Identificador(LinkedList<Expresion> lista,String val) {
-        this.val = val;
-        this.lista = lista;
-        this.isObjecto = false;
-    }
-    
-    public String getVal() {
-        return val;
-    }
-
-    public void setVal(String val) {
-        this.val = val;
-    }
-    
-
-    public Identificador(String val,boolean isObjecto) {
+    //b ;
+    public Identificador(String val,boolean isAssign) {
         this.val = val;
         this.lista = null;
-        this.isObjecto = isObjecto;
+        this.isAssign = isAssign;
     }
-    
-    public Identificador(String val,LinkedList<Expresion> lista) {
+    //arreglo[E][E][E]
+    public Identificador(String val,LinkedList<Expresion> lista,boolean isAssign) {
         this.val = val;
         this.lista = lista;
+        this.isAssign = isAssign;
     }
     
     @Override
@@ -68,17 +55,24 @@ public class Identificador implements Expresion{
         Entorno en = ent.getHeredado() != null ? ent.getHeredado() : ent ;
         Simbolo sim = en.get(val);
         if (sim != null) {
-            //asginacion
-           
-            if (isObjecto) 
+            //asginacion           
+            if (isAssign) 
             {
                 if(lista == null)
                 {
                    return sim;
                 }else{
                     // SEa Acceso Arreglo 
-                    System.out.println("ARREGLO");
-                    return null;
+                    arregloVar arr = (arregloVar) sim.getValor();       
+                    if (arr != null) 
+                    {
+                        Simbolo simArreglo = (Simbolo) getSimArreglo(lista,0,ent,arr);
+                        return simArreglo;
+                    }
+                    else{
+                        System.out.println("Error en Arreglo");
+                        return null;
+                    }
                 }
             }
             //normal
@@ -130,7 +124,8 @@ public class Identificador implements Expresion{
             int index = (int) l.get(indiceActual).getValorImplicito(ent);
             if (indiceActual == l.size()-1 ) 
             {
-                return arr.get(index);
+                Object ob = arr.get(index);
+                return ob;
             }
             else{
                 arr = (arregloVar) arr.get(index);            
@@ -142,4 +137,28 @@ public class Identificador implements Expresion{
         }
     }
     
+        public String getVal() {
+        return val;
+    }
+
+    public void setVal(String val) {
+        this.val = val;
+    }
+
+    private Object getSimArreglo(LinkedList<Expresion> l, int indiceActual, Entorno ent, arregloVar arr) {
+        try {
+            int index = (int) l.get(indiceActual).getValorImplicito(ent);
+            if (indiceActual == l.size()-1 ) 
+            {
+                return arr.getAssig(index);
+            }
+            else{
+                arr = (arregloVar) arr.getAssig(index);            
+                return getValorArreglo(l, indiceActual+1,ent,arr);
+            }
+        } catch (Exception e) {
+            System.err.println("ERROR EN GETVALOR "+e.toString());
+            return null;
+        }
+    }
 }

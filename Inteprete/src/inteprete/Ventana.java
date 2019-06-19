@@ -206,6 +206,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void BpruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BpruebaActionPerformed
         try {
+            Consola.setText("");
             String entrada = "C:\\Users\\p_ab1\\Desktop\\entrada.txt";
             
             new Sintactico(new Lexico(new BufferedReader(new FileReader(entrada)))).parse();
@@ -265,6 +266,10 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
     
     public void agregarConsola(String cad){
+        Consola.setText(Consola.getText()+""+ cad);
+    }
+    
+    public void agregarConsolaln(String cad){
         Consola.setText(Consola.getText()+""+ cad + "\n");
     }
     /**

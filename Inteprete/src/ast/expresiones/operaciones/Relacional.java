@@ -156,8 +156,8 @@ public class Relacional extends Operacion{
                         else{
                             double r1 = Double.valueOf(res1.toString());
                             double r2 = Double.valueOf(res2.toString());
-                            System.out.println("r1: "+r1);
-                            System.out.println("r2: "+r2);
+//                            System.out.println("r1: "+r1);
+//                            System.out.println("r2: "+r2);
                             
                             boolean res = r1 != r2;
                             return res;
@@ -171,8 +171,8 @@ public class Relacional extends Operacion{
             {
                 boolean r1 = (boolean)res1;
                 boolean r2 = (boolean)res2;    
-                System.out.println("r1:"+r1);
-                System.out.println("r2:"+r2);
+//                System.out.println("r1:"+r1);
+//                System.out.println("r2:"+r2);
                 switch(operador)
                 {
                     case IGUAL_IGUAL:

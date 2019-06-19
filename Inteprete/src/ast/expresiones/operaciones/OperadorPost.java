@@ -43,14 +43,17 @@ public class OperadorPost implements Expresion{
                 switch(aux)
                 {
                     case INT:
-                        sim.setValor((int)sim.getValor()+1);
-                        return (int)sim.getValor()+1;
+                        int val = (int)sim.getValor();
+                        sim.setValor(val+1);
+                        return (int)val+1;
                     case DOUBLE:
-                        sim.setValor((double)sim.getValor()+1.0);
-                        return (double)sim.getValor()+1.0;
+                        double val2 = (double)sim.getValor();
+                        sim.setValor(val2+1.0);
+                        return (double)val2+1.0;
                     case CHAR:
-                        sim.setValor((char)sim.getValor()+1);
-                        return (char)sim.getValor() + 1;
+                        char val3 = (char)sim.getValor();                        
+                        sim.setValor(val3+1);
+                        return (char)val3 + 1;
                     default:
                         System.out.println("ERROR la variable tiene que ser numerica y es: "+aux.toString());
                         return null;
@@ -61,14 +64,17 @@ public class OperadorPost implements Expresion{
                 switch(aux)
                 {
                     case INT:
-                        sim.setValor((int)sim.getValor()-1);
-                        return (int)sim.getValor()-1;
+                        int val = (int)sim.getValor();                        
+                        sim.setValor(val-1);
+                        return (int)val-1;
                     case DOUBLE:
-                        sim.setValor((double)sim.getValor()-1.0);
-                        return (double)sim.getValor()-1.0;
+                        double val2 = (double)sim.getValor();
+                        sim.setValor(val2-1.0);
+                        return (double)val2-1.0;
                     case CHAR:
-                        sim.setValor((char)sim.getValor()-1);
-                        return (char)sim.getValor() - 1;
+                        char val3 = (char)sim.getValor();  
+                        sim.setValor(val3-1);
+                        return (char)val3 - 1;
                     default:
                         System.out.println("ERROR la variable tiene que ser numerica y es: "+aux.toString());
                         return null;
@@ -91,4 +97,22 @@ public class OperadorPost implements Expresion{
     public int columana() {
         return col;
     }
+
+    public Identificador getId() {
+        return id;
+    }
+
+    public void setId(Identificador id) {
+        this.id = id;
+    }
+
+    public boolean isSuma() {
+        return suma;
+    }
+
+    public void setSuma(boolean suma) {
+        this.suma = suma;
+    }
+    
+    
 }

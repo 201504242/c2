@@ -5,10 +5,12 @@
  */
 package ast.instrucciones;
 
+import ast.expresiones.operaciones.OperadorPost;
 import ast.general.Expresion;
 import ast.general.Instruccion;
 import ast.general.NodoAST;
 import entorno.Entorno;
+import entorno.Simbolo;
 import java.util.LinkedList;
 import javax.swing.text.StyledEditorKit;
 
@@ -49,11 +51,12 @@ public class For extends Condicion implements Instruccion{
             inicializacion.ejecutar(local);
             //if cond bool
             while ((boolean)getCond().getValorImplicito(local)) 
-            {           
+            {     
+                Entorno entFor = new Entorno(local);
                 //ejecuto cada iteracion
                 for (NodoAST in : getIns()) 
                 {
-                    Object result = ((Instruccion)in).ejecutar(local);
+                    Object result = ((Instruccion)in).ejecutar(entFor);
                     if (in instanceof Break) {
                         return new Break();
                     }
@@ -63,15 +66,13 @@ public class For extends Condicion implements Instruccion{
                     }
                 }
                 //hago el cambio en la iteracion
-                String id;
-                if (inicializacion instanceof Asignacion) {
-                    
+                String id= "inc";
+                if (incremento instanceof OperadorPost) {
+                    id = ((OperadorPost)incremento).getId().getVal();
                 }
-                else{
-                    id  = ((Declaracion)inicializacion).getVars().get(0).getId();
-                }
-                Object sim = incremento.getValorImplicito(local);
-                //local.reemplazar(id, sim);
+                Object dato = incremento.getValorImplicito(local);
+               // Simbolo nuevo = new Simbolo(id, dato, incremento.getTipo(local), Simbolo.Rol.VARIABLE);
+                //local.reemplazar(id, nuevo);
             }
         } catch (Exception e) {
         }

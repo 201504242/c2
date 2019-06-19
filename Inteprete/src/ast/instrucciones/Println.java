@@ -8,14 +8,13 @@ package ast.instrucciones;
 import ast.general.Expresion;
 import ast.general.Instruccion;
 import entorno.Entorno;
-import entorno.Simbolo;
 import inteprete.Ventana;
 
 /**
  *
  * @author p_ab1
  */
-public class Print implements Instruccion{
+public class Println implements Instruccion{
     private Expresion valor;
     int linea;
     int col;
@@ -24,7 +23,7 @@ public class Print implements Instruccion{
     public int columana() {
         return col;
     }
-    public Print(Expresion valor) {
+    public Println(Expresion valor) {
         this.valor = valor;
     }
     
@@ -34,12 +33,12 @@ public class Print implements Instruccion{
         Object o = valor.getValorImplicito(ent);
         if (o != null) 
         {
-            Ventana.getVentana().agregarConsola(" "+o.toString());
+            Ventana.getVentana().agregarConsolaln(" "+o.toString());
             System.out.println(" "+o.toString());
         }
         else
         {
-            Ventana.getVentana().agregarConsola("Valor null");  
+            Ventana.getVentana().agregarConsolaln("Valor null");  
             System.out.println("Valor null");
         }
         return null;
@@ -51,3 +50,4 @@ public class Print implements Instruccion{
     }
     
 }
+

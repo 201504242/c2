@@ -42,7 +42,7 @@ import ast.expresiones.Instancia;
 import java.util.LinkedList;
 import ast.expresiones.Acceso;
 import ast.expresiones.AccesoAsig;
-
+import ast.instrucciones.Println;
 parser code
 {:
 public static AST arbol;
@@ -69,7 +69,7 @@ action code
 //PALABRAS RESERVADAS
 terminal Tclass,Textends,Tpublic,Tprotected,Tprivate,Tabstract,Tstatic,Tfinal,Tvoid;
 terminal Timport,Treturn,Tthis,Tsuper;
-terminal printtabla,print;
+terminal printtabla,print,println;
 terminal ttrue,tfalse;
 terminal tint,tchar,tbool,tstring,tdouble;
 terminal Tif,Telse,Twhile,Tbreak,Tnew,Tfor;
@@ -101,6 +101,7 @@ non terminal Instruccion SENTENCIA_IF;
 
 non terminal Instruccion PRINTTABLA;
 non terminal Instruccion PRINT;
+non terminal Instruccion PRINTLN;
 non terminal Expresion EXPRESION;
 non terminal Expresion POSTFIJO;
 non terminal Instruccion SENTENCIA_WHILE;
@@ -515,6 +516,10 @@ L ::=  fantasma
     {:
         RESULT = e;
     :}
+|PRINTLN:e
+    {:
+        RESULT = e;
+    :}
 |POSTFIJO:e pcoma
     {:
         RESULT = e;
@@ -546,6 +551,11 @@ FOR_INI::= DEC:a
 PRINT ::= print para EXPRESION:res parc pcoma 
     {:
         RESULT = new Print(res);
+    :};
+
+PRINTLN ::= println para EXPRESION:res parc pcoma 
+    {:
+        RESULT = new Println(res);
     :};
 
 PRINTTABLA ::= printtabla para parc pcoma 
@@ -580,7 +590,7 @@ LISTAASIGNACION::=
     |ID:a DIMENSION:b
     {:
         //dimension lista de expresiones
-        RESULT = new Identificador(b,a);
+        RESULT = new Identificador(a,b,true);
     :};
 
 SENTENCIA_BREAK::= Tbreak pcoma
@@ -738,7 +748,7 @@ EXPRESION ::= INI_ARRAY:i                   {:RESULT = i;:}
     :}
 |ID:valor DIMENSION:a
     {:
-        RESULT =  new Identificador(valor.toString(),a);
+        RESULT =  new Identificador(valor.toString(),a,false);
     :}
 |POSTFIJO:p
     {:

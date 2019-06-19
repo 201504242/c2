@@ -90,6 +90,7 @@ COMENTMULTILINEA ="/*""/"*([^*/]|[^*]"/"|"*"[^/])*"*"*"*/"
 
 "printtabla"   { return new Symbol(Simbolos.printtabla, yycolumn,yyline, yytext()); }
 "print"   { return new Symbol(Simbolos.print, yycolumn,yyline, yytext()); }
+"println"   { return new Symbol(Simbolos.println, yycolumn,yyline, yytext()); }
 
 "if"   { return new Symbol(Simbolos.Tif, yycolumn,yyline, yytext()); }
 "else"   { return new Symbol(Simbolos.Telse, yycolumn,yyline, yytext()); }
