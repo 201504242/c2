@@ -19,27 +19,8 @@ public class Inteprete {
      * @param args the command line arguments
      */
     public static void main(String[] args){
-        
-                
-        try {
-            /*FileWriter fw = new FileWriter("Entrada.txt");
-            fw.write(entrada);
-            fw.close();*/
-//             String entrada = "C:\\Users\\p_ab1\\Desktop\\entrada.txt";
-//            
-//            new Sintactico(new Lexico(new BufferedReader(new FileReader(entrada)))).parse();
-//            
-//            AST arbol = Sintactico.arbol;
-//            if (arbol != null) {
-//                arbol.ejecutar();
-//            }            
-            v = new Ventana();
-            v.setVisible(true);
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "A ocurrido un Error "+ex.getMessage());
-        }
-        
+        v = new Ventana();
+        v.setVisible(true);       
         
     }  
     

@@ -8,10 +8,12 @@ package inteprete;
 import ast.AST;
 import static inteprete.Inteprete.v;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -37,21 +39,8 @@ public class Ventana extends javax.swing.JFrame {
      * Creates new form Ventana
      */
     public Ventana() {
-//        RSyntaxTextArea textArea = new RSyntaxTextArea(30, 70);
-//        RSyntaxTextArea.setTabSize(3);
-//        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-//        textArea.setCodeFoldingEnabled(true);
-//        setContentPane(cp);
-//        setTitle("Text Editor Demo");
-//        setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        pack();
-        //setLocationRelativeTo(null);
-        initComponents();
-         
-        agregarArchivo("if(){"
-                + "int b;"
-                + "}");
         
+        initComponents();
 
 
     }
@@ -102,7 +91,7 @@ public class Ventana extends javax.swing.JFrame {
         pestanas = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         Consola = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        Correr = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         crear = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -128,10 +117,10 @@ public class Ventana extends javax.swing.JFrame {
         Consola.setEnabled(false);
         jScrollPane2.setViewportView(Consola);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Correr.setText("Correr");
+        Correr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                CorrerActionPerformed(evt);
             }
         });
 
@@ -146,7 +135,7 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(Bprueba)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(Correr))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 20, Short.MAX_VALUE))
         );
@@ -156,7 +145,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Bprueba)
-                    .addComponent(jButton1))
+                    .addComponent(Correr))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pestanas, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -233,7 +222,6 @@ public class Ventana extends javax.swing.JFrame {
             String nombreArchivo="compi";
             if (result == JFileChooser.APPROVE_OPTION) {
                 selectedFile = fileChooser.getSelectedFile();
-                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 nombreArchivo = selectedFile.getName();
             }  
             
@@ -261,10 +249,35 @@ public class Ventana extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
+        
+            // TODO add your handling code here:
+            String txt;
+        try {  
+            int select = pestanas.getSelectedIndex();
+            Component com = pestanas.getSelectedComponent();
+            JPanel panel = (JPanel)com;
+            RTextScrollPane rt = (RTextScrollPane) panel.getComponent(0);
+            RSyntaxTextArea rs = (RSyntaxTextArea) rt.getTextArea();
+            txt = rs.getText();
+            FileWriter fw = new FileWriter("entrada.txt");
+            fw.write(txt);
+            fw.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en Casteo Visual\n"+e.getMessage(), "Ocurrion un Error", JOptionPane.ERROR_MESSAGE);        
+        }
+        
+        try {    
+            //new Sintactico(new Lexico(new BufferedReader(new FileReader(txt)))).parse();
+            new Sintactico(new Lexico(new BufferedReader(new FileReader("entrada.txt")))).parse();
+            AST arbol = Sintactico.arbol;
+            if (arbol != null) {
+                arbol.ejecutar();
+            }        
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en el parser\n"+ex.getMessage(), "Ocurrion un Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_CorrerActionPerformed
     
     public void agregarConsola(String cad){
         Consola.setText(Consola.getText()+""+ cad);
@@ -311,10 +324,10 @@ public class Ventana extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bprueba;
     private javax.swing.JTextArea Consola;
+    private javax.swing.JButton Correr;
     private javax.swing.JMenu crear;
     private javax.swing.JMenuItem guardar;
     private javax.swing.JMenuItem guardarComo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

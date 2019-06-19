@@ -1,0 +1,21 @@
+class Estudiante{
+    int carnet;
+    Estudiante(int carnet){
+        this.carnet = carnet;
+    }
+    int getCarnet(){
+        return this.carnet;
+    }
+}
+
+class Main{
+    void main() {
+        Estudiante e1 = new Estudiante(2015);
+        Estudiante e2 = new Estudiante(2016);
+
+        println(e1.carnet);
+        println(e2.carnet);
+        e2.carnet = e1.carnet;
+        print(e2.getCarnet());
+    }
+}
