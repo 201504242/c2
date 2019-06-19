@@ -33,8 +33,7 @@ public class Constructor extends Simbolo implements Instruccion {
     
     @Override
     public Object ejecutar(Entorno ent) {
-        System.out.println("empieza");
-        
+        //System.out.println("empieza");        
         for (Simbolo parametro : parametros) {
             Simbolo aux = ent.get(parametro.getIdentificador());
             if (aux != null) 

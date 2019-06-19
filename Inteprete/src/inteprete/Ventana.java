@@ -122,6 +122,7 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         Consola.setColumns(20);
+        Consola.setFont(new java.awt.Font("Microsoft Sans Serif", 2, 14)); // NOI18N
         Consola.setRows(5);
         Consola.setDisabledTextColor(new java.awt.Color(173, 146, 43));
         Consola.setEnabled(false);

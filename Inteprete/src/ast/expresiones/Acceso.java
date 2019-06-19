@@ -81,6 +81,12 @@ public class Acceso implements Expresion{
                 }
             }
         }
+//        else if (ob1 instanceof Identificador) 
+//        {
+//            if (((Identificador) ob1).getVal().equals("this")){
+//                return o2
+//            }
+//        }
         return null;
     }   
     

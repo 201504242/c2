@@ -52,60 +52,68 @@ public class Identificador implements Expresion{
 
     @Override
     public Object getValorImplicito(Entorno ent) {
-        Entorno en = ent.getHeredado() != null ? ent.getHeredado() : ent ;
-        Simbolo sim = en.get(val);
-        if (sim != null) {
-            //asginacion           
-            if (isAssign) 
-            {
-                if(lista == null)
+        if (!val.equals("this")) 
+        {
+            Entorno en = ent.getHeredado() != null ? ent.getHeredado() : ent ;
+            Simbolo sim = en.get(val);
+            if (sim != null) {
+                //asginacion           
+                if (isAssign) 
                 {
-                   return sim;
-                }else{
-                    // SEa Acceso Arreglo 
-                    arregloVar arr = (arregloVar) sim.getValor();       
-                    if (arr != null) 
+                    if(lista == null)
                     {
-                        Simbolo simArreglo = (Simbolo) getSimArreglo(lista,0,ent,arr);
-                        return simArreglo;
-                    }
-                    else{
-                        System.out.println("Error en Arreglo");
-                        return null;
+                       return sim;
+                    }else{
+                        // SEa Acceso Arreglo 
+                        arregloVar arr = (arregloVar) sim.getValor();       
+                        if (arr != null) 
+                        {
+                            Simbolo simArreglo = (Simbolo) getSimArreglo(lista,0,ent,arr);
+                            return simArreglo;
+                        }
+                        else{
+                            System.out.println("Error en Arreglo");
+                            return null;
+                        }
                     }
                 }
-            }
-            //normal
-            else
-            {
-                if (lista == null) 
+                //normal
+                else
                 {
-                    //return sim.getTipo().getTipoPrimitivo() == Tipo.Tipos.OBJETO? ((Objeto)sim).getAtributos() : sim.getValor();                
-                    if (sim.getValor() instanceof Objeto)
+                    if (lista == null) 
                     {
-                        Objeto o = (Objeto) sim.getValor();
-                        return o.getAtributos();
+                        //return sim.getTipo().getTipoPrimitivo() == Tipo.Tipos.OBJETO? ((Objeto)sim).getAtributos() : sim.getValor();                
+                        if (sim.getValor() instanceof Objeto)
+                        {
+                            Objeto o = (Objeto) sim.getValor();
+                            return o.getAtributos();
+                        }
+                        else
+                        {
+                            return sim.getValor();
+                        }
                     }
                     else
                     {
-                        return sim.getValor();
-                    }
-                }
-                else
-                {
-                    arregloVar arr = (arregloVar) sim.getValor();       
-                    if (arr != null) 
-                    {
-                        Object ob = getValorArreglo(lista,0,ent,arr);;
-                        Simbolo s = new Simbolo(val, ob,getTipo(ent),Rol.ARREGLO);
-                        return s.getValor();
-                    }
-                    else{
-                        System.out.println("Error en Arreglo");
-                        return null;
+                        arregloVar arr = (arregloVar) sim.getValor();       
+                        if (arr != null) 
+                        {
+                            Object ob = getValorArreglo(lista,0,ent,arr);;
+                            Simbolo s = new Simbolo(val, ob,getTipo(ent),Rol.ARREGLO);
+                            return s.getValor();
+                        }
+                        else{
+                            System.out.println("Error en Arreglo");
+                            return null;
+                        }
                     }
                 }
             }
+        }
+        //es this
+        else
+        {
+            return ent;
         }
         return null;
     }

@@ -2967,7 +2967,9 @@ class CUP$Sintactico$actions {
           case 132: // EXPRESION ::= Tthis 
             {
               Expresion RESULT =null;
-
+		
+        RESULT =  new Identificador("this",false);
+    
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;

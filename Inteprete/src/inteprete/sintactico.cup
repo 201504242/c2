@@ -704,8 +704,10 @@ EXPRESION ::= INI_ARRAY:i                   {:RESULT = i;:}
     {:
         RESULT =a;
     :}
-|Tthis  
-
+|Tthis 
+    {:
+        RESULT =  new Identificador("this",false);
+    :}
 |EXPRESION:a Tpunto EXPRESION:b
     {:     
         RESULT = new Acceso(a,b);

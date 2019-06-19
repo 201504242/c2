@@ -145,6 +145,9 @@
             <Component class="javax.swing.JTextArea" name="Consola">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Microsoft Sans Serif" size="14" style="2"/>
+                </Property>
                 <Property name="rows" type="int" value="5"/>
                 <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="2b" green="92" red="ad" type="rgb"/>

@@ -67,7 +67,8 @@ public class Llama implements Expresion{
                 System.out.println("ERROR la funcion con nombre: "+id+" no existe en ningun entorno");
             }
         } catch (Exception e) {
-            System.out.println("ERROR");
+            System.out.println("ERROR la funcion con nombre: "+id+" no existe en ningun entorno");
+
         }
         
         return null;
