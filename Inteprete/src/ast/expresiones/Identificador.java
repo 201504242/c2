@@ -20,14 +20,13 @@ import java.util.LinkedList;
 public class Identificador implements Expresion{
     private String val;
     private LinkedList<Expresion> lista;
-    private LinkedList<Simbolo> listaP;
     int linea;
     int col;
     boolean isObjecto;
     
-    public Identificador(LinkedList<Simbolo> listaP,String val) {
+    public Identificador(LinkedList<Expresion> lista,String val) {
         this.val = val;
-        this.listaP = listaP;
+        this.lista = lista;
         this.isObjecto = false;
     }
     
@@ -76,6 +75,7 @@ public class Identificador implements Expresion{
                    return sim;
                 }else{
                     // SEa Acceso Arreglo 
+                    System.out.println("ARREGLO");
                     return null;
                 }
             }

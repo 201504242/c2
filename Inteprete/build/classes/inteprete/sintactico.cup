@@ -576,6 +576,11 @@ LISTAASIGNACION::=
     |ID:a para B:b parc
     {:
         RESULT = new Llama(a,b);
+    :}
+    |ID:a DIMENSION:b
+    {:
+        //dimension lista de expresiones
+        RESULT = new Identificador(b,a);
     :};
 
 SENTENCIA_BREAK::= Tbreak pcoma
