@@ -578,6 +578,9 @@ LISTAASIGNACION::=
         RESULT =  new Identificador(valor.toString(),true);
     :}
     |Tthis
+    {:
+        RESULT =  new Identificador("this",true);
+    :}
     |Tsuper
     |ID:a para parc
     {:
@@ -701,6 +704,8 @@ EXPRESION ::= INI_ARRAY:i                   {:RESULT = i;:}
     {:
         RESULT =a;
     :}
+|Tthis  
+
 |EXPRESION:a Tpunto EXPRESION:b
     {:     
         RESULT = new Acceso(a,b);

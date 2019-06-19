@@ -50,6 +50,13 @@ public class AccesoAsig implements Expresion{
                 }
             }
         }
+        else
+        {
+            if (((Simbolo)o1).getIdentificador().equals("this")) 
+            {
+                
+            }
+        }
         return null;
     }
 

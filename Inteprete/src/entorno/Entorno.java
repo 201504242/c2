@@ -5,6 +5,7 @@
  */
 package entorno;
 
+import entorno.Simbolo.Rol;
 import entorno.Tipo.Tipos;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -53,6 +54,8 @@ public class Entorno {
                 }
             }
         }
+
+    
     public void Mostrar(){
         int c= 0;
         for (Entorno e = this; e != null; e = e.anterior)

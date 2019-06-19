@@ -26,7 +26,7 @@ public class Literal implements Expresion{
     
     @Override
     public Tipo getTipo(Entorno ent) {
-        Object val = this.getValorImplicito(ent);
+        //Object val = this.getValorImplicito(ent);
         return this.tipo;        
     }
 
