@@ -49,14 +49,15 @@ public class AccesoAsig implements Expresion{
                     return ob2;
                 }
             }
+        }else if (((Identificador)o1).getVal().equals("this")) {
+            ent.setHeredado(ent);
+            Object ob2 = o2.getValorImplicito(ent);
+                ent.setHeredado(null);
+                if (ob2 != null) {
+                    return ob2;
+                }
         }
-        else
-        {
-            if (((Simbolo)o1).getIdentificador().equals("this")) 
-            {
-                
-            }
-        }
+        
         return null;
     }
 

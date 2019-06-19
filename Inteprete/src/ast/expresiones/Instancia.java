@@ -52,7 +52,6 @@ public class Instancia implements Expresion{
             Clase c = (Clase) ent.get(id);
             if (c != null) 
             {
-                
                 Entorno atributos = new Entorno(null);
                 //VARIABLES GLOBALES
                 for (Instruccion ins : c.getInstrucciones()) {
@@ -77,8 +76,11 @@ public class Instancia implements Expresion{
                                 {
                                     ((Instruccion)exp.get(i)).ejecutar(atributos);
                                 }
-                                else{
-                                    ((Expresion)exp.get(i)).getValorImplicito(atributos);
+                                else
+                                {
+                                    Object valorParametro = ((Expresion)exp.get(i)).getValorImplicito(atributos);                                    
+                                    parametros.get(i).setValor(valorParametro);
+                                    parametros.set(i,parametros.get(i));
                                 }
                             }
                             cons.ejecutar(atributos);
