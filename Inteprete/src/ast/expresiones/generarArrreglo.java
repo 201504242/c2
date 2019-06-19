@@ -33,37 +33,58 @@ public class generarArrreglo implements Expresion{
 
     @Override
     public Object getValorImplicito(Entorno ent) {
-        arregloVar arregloNuevo = new arregloVar();
-        boolean primero = true;
-        arregloVar hijo = new arregloVar();
-        for (int i = this.listaDimensiones.size(); i > 0; i--) 
+        Object val = this.tipoDer.isNumeric() ? 0 : "" ; 
+        if (listaDimensiones.size() > 1) 
         {
-            int casillas = (int)listaDimensiones.get(i-1).getValorImplicito(ent);
-            if (primero) 
+            arregloVar nuevo = new arregloVar();
+            int i = listaDimensiones.size() - 1;
+            int c = (int) listaDimensiones.get(i).getValorImplicito(ent);
+            for (int j = 0; j < c; j++) 
             {
-                primero = false;
-                switch (tipoDer.getTipoPrimitivo()) {
-                case INT:
-                    hijo = new arregloVar();                   
-                    for (int j = 0; j < casillas; j++) {
-                        hijo.add(0);
-                    }
-                    break;
-                default:
-                    System.out.println("Error este tipo "+tipoDer+ " no se puede declarar en un arreglo");;
-                }
+                nuevo.add(val);
             }
-            else
-            {
-                for (int j = 0; j < casillas; j++) {
-                    arregloNuevo.add(hijo);
-                }
-            }
-            
+            i--;
+            arregloVar retorna = gen(i,ent,listaDimensiones,nuevo);
+            return retorna;
         }
-        return arregloNuevo;
+        else if(listaDimensiones.size() == 1)
+        {
+            arregloVar nuevo = new arregloVar();
+            int i = listaDimensiones.size() - 1;
+            int c = (int) listaDimensiones.get(i).getValorImplicito(ent);
+            for (int j = 0; j < c; j++) 
+            {
+                nuevo.add(val);
+            }
+            return nuevo;
+        }
+        System.out.println("ERROR no es un ARREGLO");
+        return null;
     }
 
+    private arregloVar gen(int i, Entorno ent, LinkedList<Expresion> listaDimensiones, arregloVar nuevo) {
+        int c = (int) listaDimensiones.get(i).getValorImplicito(ent);
+        if (i == 0) 
+        {
+            arregloVar aux = new arregloVar();
+            for (int j = 0; j < c; j++) 
+            {
+                aux.add(nuevo);
+            }
+            return aux;
+        }
+        else
+        {
+            arregloVar aux = new arregloVar();
+            for (int j = 0; j < c; j++) 
+            {
+                aux.add(nuevo);
+            }
+            i--;
+            return gen(i,ent,listaDimensiones,aux);
+        }
+    }
+    
     @Override
     public int linea() {
         return linea;
@@ -88,5 +109,6 @@ public class generarArrreglo implements Expresion{
     public int columana() {
         return col;
     }
+
     
 }
