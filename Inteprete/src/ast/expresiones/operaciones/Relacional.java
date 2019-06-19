@@ -130,6 +130,7 @@ public class Relacional extends Operacion{
                             return (boolean)(new Double(res1.toString()) <= new Double(res2.toString()));
                         }   
                     case IGUAL_IGUAL:
+
                         if (t1.isChar() && t2.isDouble() || t1.isChar() && t2.isInt()) {
                             return (boolean)((char)res1 == new Double(res2.toString()));
                         }
@@ -155,6 +156,9 @@ public class Relacional extends Operacion{
                         else{
                             double r1 = Double.valueOf(res1.toString());
                             double r2 = Double.valueOf(res2.toString());
+                            System.out.println("r1: "+r1);
+                            System.out.println("r2: "+r2);
+                            
                             boolean res = r1 != r2;
                             return res;
                         }   

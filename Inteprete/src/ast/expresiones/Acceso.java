@@ -1,16 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change thinstanceof license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package ast.expresiones;
 
 import ast.Nativo.Objeto;
+import ast.Nativo.arregloVar;
 import ast.general.Expresion;
 import entorno.Entorno;
 import entorno.Simbolo;
 import entorno.Simbolo.Rol;
 import entorno.Tipo;
+import entorno.Tipo.Tipos;
 import java.util.LinkedList;
 
 /**
@@ -30,7 +32,31 @@ public class Acceso implements Expresion{
     
     @Override
     public Tipo getTipo(Entorno ent) {
-               return null;
+        Object valor = getValorImplicito(ent);
+        if (valor != null) 
+        {
+            if (valor instanceof Boolean)
+            {
+                return new Tipo(Tipos.BOOL);
+            }
+            else if (valor instanceof String)
+            {
+                return new Tipo(Tipos.STRING);
+            }
+            else if (valor instanceof Character)
+            {
+                return new Tipo(Tipos.CHAR);
+            }
+            else if (valor instanceof Integer)
+            {
+                return new Tipo(Tipos.INT);
+            }
+            else if (valor instanceof Double)
+            {
+                return new Tipo(Tipos.DOUBLE);
+            }
+        }
+        return new Tipo((String) valor);
     }
 
     @Override
@@ -45,9 +71,19 @@ public class Acceso implements Expresion{
                 return ob2;
             }
         }
+        else if (ob1 instanceof  arregloVar) 
+        {           
+            if (o2 instanceof Identificador) 
+            {
+                Identificador s = (Identificador)o2;
+                if (s.getVal().equals("length")) {
+                    return ((arregloVar) ob1).size();
+                }
+            }
+        }
         return null;
-    }
-
+    }   
+    
     @Override
     public int linea() {
         return linea;

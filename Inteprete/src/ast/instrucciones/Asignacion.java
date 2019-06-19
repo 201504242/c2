@@ -20,20 +20,16 @@ import entorno.Tipo.Tipos;
 public class Asignacion implements Instruccion{
     private Expresion assig;
     private Expresion val;
-    private boolean isObjecto;
     int linea;
     int col;    
     public Asignacion(Expresion id, Expresion val) {
         this.assig = id;
         this.val = val;
-        this.isObjecto = false;
     }
 
     public Asignacion( Expresion val) {
         this.val = val;
-        this.isObjecto = true;
-    }
-    
+    }   
     
     @Override
     public Object ejecutar(Entorno ent) {        
@@ -41,7 +37,7 @@ public class Asignacion implements Instruccion{
         {
            Simbolo asignar = (Simbolo)assig.getValorImplicito(ent);
            Object valor = this.val.getValorImplicito(ent);
-           asignar.setValor(valor);
+            asignar.setValor(valor);
         }
         catch(Exception e)
         {
@@ -52,7 +48,7 @@ public class Asignacion implements Instruccion{
 
     @Override
     public int linea() {
-return linea;
+        return linea;
     }
 
     @Override

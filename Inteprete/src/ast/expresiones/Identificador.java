@@ -10,6 +10,7 @@ import ast.Nativo.arregloVar;
 import ast.general.Expresion;
 import entorno.Entorno;
 import entorno.Simbolo;
+import entorno.Simbolo.Rol;
 import entorno.Tipo;
 import java.util.LinkedList;
 
@@ -97,8 +98,17 @@ public class Identificador implements Expresion{
                 }
                 else
                 {
-                    arregloVar arr = (arregloVar) sim.getValor();                
-                    return getValorArreglo(lista,0,ent,arr);
+                    arregloVar arr = (arregloVar) sim.getValor();       
+                    if (arr != null) 
+                    {
+                        Object ob = getValorArreglo(lista,0,ent,arr);;
+                        Simbolo s = new Simbolo(val, ob,getTipo(ent),Rol.ARREGLO);
+                        return s;
+                    }
+                    else{
+                        System.out.println("Error en Arreglo");
+                        return null;
+                    }
                 }
             }
         }
