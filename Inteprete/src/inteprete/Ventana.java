@@ -7,26 +7,82 @@ package inteprete;
 
 import ast.AST;
 import static inteprete.Inteprete.v;
+import java.awt.BorderLayout;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.Gutter;
+import org.fife.ui.rtextarea.GutterIconInfo;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 /**
  *
  * @author p_ab1
  */
 public class Ventana extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form Ventana
      */
     public Ventana() {
+//        RSyntaxTextArea textArea = new RSyntaxTextArea(30, 70);
+//        RSyntaxTextArea.setTabSize(3);
+//        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+//        textArea.setCodeFoldingEnabled(true);
+//        setContentPane(cp);
+//        setTitle("Text Editor Demo");
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        pack();
+        //setLocationRelativeTo(null);
         initComponents();
+         
+        agregarArchivo("if(){"
+                + "int b;"
+                + "}");
+        
+
+
     }
     
+    private JPanel agregarArchivo(String texto){
+        JPanel cp = new JPanel(new BorderLayout());
+        RTextScrollPane sp = new RTextScrollPane(createTextArea(texto));
+        sp.setFoldIndicatorEnabled(true);
+        sp.setIconRowHeaderEnabled(true);
+        sp.setLineNumbersEnabled(true);
+        cp.add(sp);
+        return cp;
+    }
+    
+    private RSyntaxTextArea createTextArea(String texto) {
+	RSyntaxTextArea textArea = new RSyntaxTextArea(25, 70);
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        textArea.setCodeFoldingEnabled(true);
+	textArea.setTabSize(3);
+        textArea.setText(texto);
+	textArea.setCaretPosition(0);
+	textArea.requestFocusInWindow();
+	textArea.setMarkOccurrences(true);
+	textArea.setCodeFoldingEnabled(true);
+	textArea.setClearWhitespaceLinesEnabled(true);
+	textArea.setAntiAliasingEnabled(true);
+	textArea.setLineWrap(true);
+        textArea.setFadeCurrentLineHighlight(true);
+	return textArea;
+}
+ 
     public static Ventana getVentana(){
         return v;
     }
@@ -40,13 +96,21 @@ public class Ventana extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         Bprueba = new javax.swing.JButton();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        pestanas = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         Consola = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        crear = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        guardar = new javax.swing.JMenuItem();
+        guardarComo = new javax.swing.JMenuItem();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,18 +121,18 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
-        jTabbedPane2.addTab("tab1", jScrollPane1);
-
         Consola.setColumns(20);
         Consola.setRows(5);
+        Consola.setDisabledTextColor(new java.awt.Color(173, 146, 43));
+        Consola.setEnabled(false);
         jScrollPane2.setViewportView(Consola);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -77,24 +141,50 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(pestanas, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Bprueba))
-                        .addContainerGap(27, Short.MAX_VALUE))))
+                        .addComponent(Bprueba)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Bprueba)
-                .addGap(48, 48, 48)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Bprueba)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pestanas, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        crear.setText("Archivo");
+
+        jMenuItem2.setText("Abrir");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        crear.add(jMenuItem2);
+
+        jMenuItem1.setText("Crear");
+        crear.add(jMenuItem1);
+
+        guardar.setText("Guardar");
+        crear.add(guardar);
+
+        guardarComo.setText("Guardar Como");
+        crear.add(guardarComo);
+
+        jMenuBar1.add(crear);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,6 +220,49 @@ public class Ventana extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error en el parser\n"+ex.getMessage(), "Ocurrion un Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BpruebaActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // Menu ABRIR
+        BufferedReader reader = null;
+        try {           
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showOpenDialog(this);
+            File selectedFile = null;
+            String nombreArchivo="compi";
+            if (result == JFileChooser.APPROVE_OPTION) {
+                selectedFile = fileChooser.getSelectedFile();
+                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                nombreArchivo = selectedFile.getName();
+            }  
+            
+            reader = new BufferedReader(new FileReader(selectedFile.getAbsolutePath()));
+            String line;
+            String todo="";
+            while ((line = reader.readLine()) != null)
+            {
+                todo = todo + line + "\n";
+            }   
+            reader.close();
+            
+            pestanas.add(nombreArchivo,agregarArchivo(todo));
+            
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "No Encontro el Archivo FileNotFoundException", "Error en Archivo", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "No Encontro el Archivo IOException", "Error en Archivo", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "No Encontro el Archivo IOException 2", "Error en Archivo", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     public void agregarConsola(String cad){
         Consola.setText(Consola.getText()+""+ cad + "\n");
@@ -172,11 +305,19 @@ public class Ventana extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bprueba;
     private javax.swing.JTextArea Consola;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JMenu crear;
+    private javax.swing.JMenuItem guardar;
+    private javax.swing.JMenuItem guardarComo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane pestanas;
     // End of variables declaration//GEN-END:variables
+
+   
 }

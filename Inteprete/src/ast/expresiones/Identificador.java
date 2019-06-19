@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -103,7 +104,7 @@ public class Identificador implements Expresion{
                     {
                         Object ob = getValorArreglo(lista,0,ent,arr);;
                         Simbolo s = new Simbolo(val, ob,getTipo(ent),Rol.ARREGLO);
-                        return s;
+                        return s.getValor();
                     }
                     else{
                         System.out.println("Error en Arreglo");
