@@ -20,8 +20,27 @@ public class Inteprete {
      */
     public static void main(String[] args){
         v = new Ventana();
-        v.setVisible(true);       
-        
+        v.setVisible(true);    
+  int cuenta = 0;
+        do 
+        { 
+            cuenta++; 
+            if (cuenta == 3) 
+            { 
+                continue; 
+            } 
+        System.out.println(cuenta); 
+        } while (cuenta < 5);
+//        for (int i = 0; i < 10; i++) {
+//            for (int j = 10; j > 0; j--) {
+//                System.out.println("i: "+i +" j: "+j);
+//            }
+//        }
+//        int contador = 1;
+//        while ( contador <= 5 ) {
+//           System.out.println("*****\n");
+//           contador++;
+//        }
     }  
     
     public static Ventana getVentana(){

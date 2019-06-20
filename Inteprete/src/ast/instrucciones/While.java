@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,14 +25,14 @@ public class While extends Condicion implements Instruccion{
     public While(LinkedList<NodoAST> ins, Expresion cond) {
         super(ins, cond);
     }
-    
  
     
     @Override
     public Object ejecutar(Entorno ent) {
+        eti: 
         while ((boolean)getCond().getValorImplicito(ent))
             {
-                Entorno local = new Entorno(ent);
+                Entorno local = new Entorno(ent);               
                 for (NodoAST ins : getIns())
                 {
                     if (ins instanceof Instruccion) 
@@ -42,6 +43,11 @@ public class While extends Condicion implements Instruccion{
                         {
                             return null;
                         }
+                        if (ins instanceof Continue || result instanceof Continue) 
+                        {
+                            continue eti;
+                        }
+
                         if (result != null)
                         {
                             return result;

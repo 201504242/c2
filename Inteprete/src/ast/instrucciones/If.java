@@ -56,6 +56,10 @@ public class If extends Condicion implements  Instruccion{
                     if (ins instanceof  Break || result instanceof Break) {
                         return new Break();
                     }
+                    if (ins instanceof Continue) 
+                    {
+                        return new Continue();
+                    }
 
                     if (result != null) {
                         return result;

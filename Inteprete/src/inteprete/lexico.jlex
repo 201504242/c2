@@ -95,7 +95,10 @@ COMENTMULTILINEA ="/*""/"*([^*/]|[^*]"/"|"*"[^/])*"*"*"*/"
 "if"   { return new Symbol(Simbolos.Tif, yycolumn,yyline, yytext()); }
 "else"   { return new Symbol(Simbolos.Telse, yycolumn,yyline, yytext()); }
 "while"   { return new Symbol(Simbolos.Twhile, yycolumn,yyline, yytext()); }
+"do"   { return new Symbol(Simbolos.Tdo, yycolumn,yyline, yytext()); }
+
 "break"   { return new Symbol(Simbolos.Tbreak, yycolumn,yyline, yytext()); }
+"continue"   { return new Symbol(Simbolos.Tcontinue, yycolumn,yyline, yytext()); }
 "new"   { return new Symbol(Simbolos.Tnew, yycolumn,yyline, yytext()); }
 "class"   { return new Symbol(Simbolos.Tclass, yycolumn,yyline, yytext()); }
 "extends"   { return new Symbol(Simbolos.Textends, yycolumn,yyline, yytext()); }

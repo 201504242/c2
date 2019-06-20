@@ -52,7 +52,7 @@ public class For extends Condicion implements Instruccion{
             //if cond bool
             while ((boolean)getCond().getValorImplicito(local)) 
             {     
-                Entorno entFor = new Entorno(local);
+                Entorno entFor = new Entorno(local);                
                 //ejecuto cada iteracion
                 for (NodoAST in : getIns()) 
                 {
@@ -60,17 +60,19 @@ public class For extends Condicion implements Instruccion{
                     if (in instanceof Break) {
                         return new Break();
                     }
+                    if (in instanceof Continue || result instanceof Continue) 
+                    {
+                        break;
+                    }
                     if (result != null)
                     {
                         return result;
                     }
                 }
-                //hago el cambio en la iteracion
-                String id= "inc";
                 if (incremento instanceof OperadorPost) {
-                    id = ((OperadorPost)incremento).getId().getVal();
+                    String id = ((OperadorPost)incremento).getId().getVal();
                 }
-                Object dato = incremento.getValorImplicito(local);
+                    Object dato = incremento.getValorImplicito(local);
                // Simbolo nuevo = new Simbolo(id, dato, incremento.getTipo(local), Simbolo.Rol.VARIABLE);
                 //local.reemplazar(id, nuevo);
             }

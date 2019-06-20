@@ -43,6 +43,8 @@ import java.util.LinkedList;
 import ast.expresiones.Acceso;
 import ast.expresiones.AccesoAsig;
 import ast.instrucciones.Println;
+import ast.instrucciones.Continue;
+import ast.instrucciones.DoWhile;
 parser code
 {:
 public static AST arbol;
@@ -72,7 +74,7 @@ terminal Timport,Treturn,Tthis,Tsuper;
 terminal printtabla,print,println;
 terminal ttrue,tfalse;
 terminal tint,tchar,tbool,tstring,tdouble;
-terminal Tif,Telse,Twhile,Tbreak,Tnew,Tfor;
+terminal Tif,Telse,Twhile,Tbreak,Tnew,Tfor,Tcontinue,Tdo;
 
 //SIMBOLOS
 terminal String menor_que,mayor_que,diferente_que,igual_que, menor_igual,mayor_igual;
@@ -105,7 +107,9 @@ non terminal Instruccion PRINTLN;
 non terminal Expresion EXPRESION;
 non terminal Expresion POSTFIJO;
 non terminal Instruccion SENTENCIA_WHILE;
+non terminal Instruccion SENTENCIA_DOWHILE;
 non terminal Instruccion SENTENCIA_BREAK;
+non terminal Instruccion SENTENCIA_CONTINUE;
 non terminal Instruccion SENTENCIA_FOR;
 non terminal Expresion SENTENCIA_LLAMADA;
 non terminal Expresion SENTENCIA_RETURN;
@@ -484,11 +488,19 @@ L ::=  fantasma
     {:
         RESULT = ins;
     :}
+|SENTENCIA_DOWHILE:ins
+    {:
+        RESULT = ins;
+    :}
 |SENTENCIA_FOR:ins
     {:
         RESULT = ins;
     :}
 |SENTENCIA_BREAK:ins
+    {:
+        RESULT = ins;
+    :}
+|SENTENCIA_CONTINUE:ins
     {:
         RESULT = ins;
     :}
@@ -601,11 +613,20 @@ SENTENCIA_BREAK::= Tbreak pcoma
         RESULT = new Break();
     :};
 
+SENTENCIA_CONTINUE::= Tcontinue pcoma
+    {:
+        RESULT = new Continue();
+    :};
+
+SENTENCIA_DOWHILE::=  Tdo llavea BLOQUE:b llavec Twhile para EXPRESION:a parc pcoma
+    {:
+        RESULT = new DoWhile(b,a);
+    :};
+
 SENTENCIA_WHILE::=  Twhile para EXPRESION:a parc llavea BLOQUE:b llavec
     {:
         RESULT = new While(b,a);
     :};
-
 SENTENCIA_IF ::= Tif para EXPRESION:a parc llavea BLOQUE:b llavec
     {:
         RESULT = new If(b,a);

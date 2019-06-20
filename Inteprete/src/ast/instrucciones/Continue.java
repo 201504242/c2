@@ -16,6 +16,15 @@ public class Continue implements Instruccion{
     int linea;
     int col;
 
+    public Continue(int linea, int col) {
+        this.linea = linea;
+        this.col = col;
+    }
+
+    public Continue() {
+    }
+
+    
     @Override
     public int columana() {
         return col;
