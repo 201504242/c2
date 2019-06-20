@@ -11,6 +11,7 @@ import ast.instrucciones.Clase;
 import ast.instrucciones.Constructor;
 import ast.instrucciones.Funcion;
 import entorno.Entorno;
+import inteprete.Graficador;
 import inteprete.JError;
 import java.util.LinkedList;
 
@@ -40,6 +41,7 @@ public class AST {
         Clase Main = null ;
         int contadorMain = 0;
         Entorno superGlobal = new Entorno(null);
+       // Graficador.addEntorno("SuperGlobal", superGlobal);
         for (NodoAST nodo : instrucciones) {
             //primera pasada meter en superglobal todas las clases
             if (nodo instanceof Clase) 
@@ -56,6 +58,7 @@ public class AST {
         for (NodoAST nodo : instrucciones) 
         {
             Entorno global = new Entorno(superGlobal);
+           // Graficador.addEntorno("global", global);
             //llenar el entorno            
             if (nodo instanceof Clase) 
             {
@@ -101,7 +104,7 @@ public class AST {
                 return ejecutar;
             }
             System.out.println("////////////TERMINO LA EJECUCION DEL MAIN");
-
+            Graficador.addEntorno("main", aux);
         }
         else{
             Error e = new Error();

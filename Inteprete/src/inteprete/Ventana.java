@@ -73,6 +73,8 @@ public class Ventana extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         guardar = new javax.swing.JMenuItem();
         guardarComo = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        reporteEntorno = new javax.swing.JMenuItem();
 
         jLabel1.setText("jLabel1");
 
@@ -106,13 +108,16 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pestanas, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pestanas, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 20, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(Bprueba)
                         .addGap(18, 18, 18)
-                        .addComponent(Correr))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 20, Short.MAX_VALUE))
+                        .addComponent(Correr)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,6 +161,18 @@ public class Ventana extends javax.swing.JFrame {
         crear.add(guardarComo);
 
         jMenuBar1.add(crear);
+
+        jMenu1.setText("Reporte");
+
+        reporteEntorno.setText("Entornos");
+        reporteEntorno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reporteEntornoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(reporteEntorno);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -234,7 +251,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
-        
+        Graficador.listaEntorno.clear();
             // TODO add your handling code here:
             String txt;
         try {  
@@ -270,6 +287,16 @@ public class Ventana extends javax.swing.JFrame {
             listaArchivos.remove(listaArchivos.size() - 1);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void reporteEntornoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteEntornoActionPerformed
+        // TODO add your handling code here:
+        if (Graficador.listaEntorno.size() != 0 ) 
+        {
+            for (Graficador gra : Graficador.listaEntorno) {
+                System.out.println("id:"+gra.id+" ent: "+gra.save);
+            }
+        }
+    }//GEN-LAST:event_reporteEntornoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,6 +341,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenuItem guardar;
     private javax.swing.JMenuItem guardarComo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -322,6 +350,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane pestanas;
+    private javax.swing.JMenuItem reporteEntorno;
     // End of variables declaration//GEN-END:variables
 
        

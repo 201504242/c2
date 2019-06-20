@@ -48,6 +48,7 @@ import ast.instrucciones.DoWhile;
 parser code
 {:
 public static AST arbol;
+public static int cont = 0;
 
     /**Metodo al que se llama automáticamente ante algún error sintactico.*/
     public void syntax_error(Symbol s){
