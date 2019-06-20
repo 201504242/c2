@@ -1,21 +1,17 @@
-class Estudiante{
-    int carnet;
-    Estudiante(int carnet){
-        this.carnet = carnet;
-    }
-    int getCarnet(){
-        return this.carnet;
-    }
+class Aux{
+     int ackermann(int m, int n) {
+        if (m == 0) {
+            return (n + 1);
+        } else if (m > 0 && n == 0) {
+            return ackermann(m - 1, 1);
+        } else {
+            return ackermann(m - 1, ackermann(m, n - 1));
+        }
+    }    
 }
-
 class Main{
     void main() {
-        Estudiante e1 = new Estudiante(2015);
-        Estudiante e2 = new Estudiante(2016);
-
-        println(e1.carnet);
-        println(e2.carnet);
-        e2.carnet = e1.carnet;
-        print(e2.getCarnet());
-    }
+        Aux eva = new Aux();
+        println("3,8: "+eva.ackermann(3,8));    
+    }  
 }

@@ -56,7 +56,7 @@ public class Llama implements Expresion{
                 Entorno local = new Entorno(en);
                 Funcion funcion = (Funcion)en.get(id);           
                 LinkedList<Simbolo> formales = funcion.getParametrosFormales();
-                if (verificar(valores,formales,local,ent))
+                if (verificar(valores,formales,local,ent))                    
                 {
                     Object a = funcion.ejecutar(local);
                     return a;
@@ -115,7 +115,6 @@ public class Llama implements Expresion{
                     v = exp_aux.getValorImplicito(ent);                                        
                     if (tipoPar_aux == tipoVal) {                        
                         Simbolo s = new Simbolo(id_aux, v, new Tipo(tipoPar_aux));
-//                        local.agregar(id_aux, new Simbolo(id_aux, v, new Tipo(tipoVal)));
                         datos.addLast(s);
                     }
                     else {
