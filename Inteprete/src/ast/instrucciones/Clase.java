@@ -36,6 +36,8 @@ public class Clase extends Simbolo implements Instruccion{
         this.constructores = constructores;
         this.jerarqua = jerarquia;
         this.Lextend = null;
+//        this.linea = fila;
+//this.col = col;
     }
     
     public Clase(LinkedList<Modificador> modificadores, LinkedList<Instruccion> Instrucciones, LinkedList<Funcion> funciones, LinkedList<Constructor> constructores, String identificador,LinkedList<Clase>jerarquia,String Lextend) {
@@ -46,6 +48,8 @@ public class Clase extends Simbolo implements Instruccion{
         this.constructores = constructores;
         this.jerarqua = jerarquia;
         this.Lextend = Lextend;
+//        this.linea = fila;
+//this.col = col;
     }
 
     @Override

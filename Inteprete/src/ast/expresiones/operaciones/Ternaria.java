@@ -17,12 +17,12 @@ public class Ternaria implements Expresion {
     int linea;
     int col;
     
-    public Ternaria(Expresion ex1, Expresion ex2, Expresion ex3,int fila,int col) {
+    public Ternaria(Expresion ex1, Expresion ex2, Expresion ex3) {
         this.ex1 = ex1;
         this.ex2 = ex2;
         this.ex3 = ex3;
-        this.linea = fila;
-        this.col = col;
+//        this.linea = fila;
+//        this.col = col;
     }
     private Expresion ex1;
     private Expresion ex2;

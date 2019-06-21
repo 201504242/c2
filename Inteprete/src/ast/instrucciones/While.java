@@ -24,6 +24,8 @@ public class While extends Condicion implements Instruccion{
 
     public While(LinkedList<NodoAST> ins, Expresion cond) {
         super(ins, cond);
+//        this.linea = fila;
+//this.col = col;
     }
  
     

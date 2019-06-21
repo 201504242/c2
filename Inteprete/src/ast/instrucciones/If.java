@@ -26,20 +26,27 @@ public class If extends Condicion implements  Instruccion{
     }
     public If(LinkedList<NodoAST> ins, Expresion cond) {
         super(ins, cond);
+//        this.linea = fila;
+//this.col = col;
     }
     
     public If(LinkedList<NodoAST> ins, Expresion cond,LinkedList<NodoAST>insElse) {
         super(ins, cond);
         this.insElse = insElse;
+//        this.linea = fila;
+//this.col = col;
     }
     
     public If(LinkedList<NodoAST> ins, Expresion cond,Instruccion elseIf) {
         super(ins, cond);
         this.elseIf = elseIf;
+//        this.linea = fila;
+//this.col = col;
     }
     
     public LinkedList<NodoAST> getInsElse() {
         return insElse;
+        
     }
     
     @Override

@@ -25,10 +25,14 @@ public class Asignacion implements Instruccion{
     public Asignacion(Expresion id, Expresion val) {
         this.assig = id;
         this.val = val;
+//        this.linea = fila;
+//this.col = col;
     }
 
     public Asignacion( Expresion val) {
         this.val = val;
+//        this.linea = fila;
+//this.col = col;
     }   
     
     @Override

@@ -43,6 +43,8 @@ public class Declaracion implements Instruccion{
         this.valor = valor;
         this.variable = variable;
         this.vars = null;
+//        this.linea = fila;
+//this.col = col;
     }
     
     //para Recursion r;
@@ -51,6 +53,8 @@ public class Declaracion implements Instruccion{
         this.tipo = tipo;
         this.variable = variable;
         this.vars = null;
+//        this.linea = fila;
+//this.col = col;
     }
     
     //Constructor para int a = 5;
@@ -58,23 +62,28 @@ public class Declaracion implements Instruccion{
         this.tipo = tipo;
         this.vars = vars;
         this.valor = valor;
+//        this.linea = fila;
+//this.col = col;
         
     }
     //Constructor para int a;
     public Declaracion(Tipo tipo, LinkedList<Var> vars) {
         this.tipo = tipo;
         this.vars = vars;
-        
+//        this.linea = fila;
+//this.col = col;
     }
     
     public Declaracion(LinkedList<Var> vars) {        
         this.vars = vars;
-        
+//        this.linea = fila;
+//this.col = col;
     }
     
     public Declaracion(LinkedList<Var> vars, Expresion valor) {        
         this.vars = vars;
-        
+//        this.linea = fila;
+//this.col = col;
     }
     
     

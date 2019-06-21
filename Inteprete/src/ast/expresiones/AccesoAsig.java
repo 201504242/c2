@@ -22,11 +22,11 @@ public class AccesoAsig implements Expresion{
     int linea;
     int columna;
 
-    public AccesoAsig(NodoAST a, NodoAST b,int fila,int col) {
+    public AccesoAsig(NodoAST a, NodoAST b) {
         this.o1 = (Expresion)a;
         this.o2 = (Expresion)b;
-        this.linea = fila;
-this.columna= col;
+//        this.linea = fila;
+//this.columna= col;
     }
     
     

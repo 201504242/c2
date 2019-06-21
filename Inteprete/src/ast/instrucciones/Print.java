@@ -26,6 +26,8 @@ public class Print implements Instruccion{
     }
     public Print(Expresion valor) {
         this.valor = valor;
+//        this.linea = fila;
+//this.col = col;
     }
     
     

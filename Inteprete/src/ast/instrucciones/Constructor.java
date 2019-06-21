@@ -28,6 +28,8 @@ public class Constructor extends Simbolo implements Instruccion {
         this.modificadores = modificadores;
         this.parametros = parametros;
         this.instrucciones = instrucciones;
+//        this.linea = fila;
+//this.col = col;
     }
     
     

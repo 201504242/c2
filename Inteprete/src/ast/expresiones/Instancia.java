@@ -31,18 +31,18 @@ public class Instancia implements Expresion{
     private LinkedList<NodoAST> exp;
     int linea;
     int col;
-    public Instancia(String id, LinkedList<NodoAST> exp,int fila,int col) {
+    public Instancia(String id, LinkedList<NodoAST> exp) {
         this.id = id;
         this.exp = exp;
-        this.linea = fila;
-        this.col = col;
+//        this.linea = fila;
+//        this.col = col;
     }
     
-    public Instancia(String id,int fila,int col) {
+    public Instancia(String id) {
         this.id = id;
         this.exp = new LinkedList();
-        this.linea = fila;
-        this.col = col;
+//        this.linea = fila;
+//        this.col = col;
     }
     @Override
     public Tipo getTipo(Entorno ent) {

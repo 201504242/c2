@@ -198,16 +198,21 @@ public class Ventana extends javax.swing.JFrame {
         try {
             Consola.setText("");
             String entrada = "C:\\Users\\p_ab1\\Desktop\\entrada.txt";
+            FileReader fr = new FileReader(entrada);
+            BufferedReader br = new BufferedReader(fr);
+            Lexico lx = new Lexico(br);
+            Sintactico st = new Sintactico(lx);
+            st.parse();
             
-            new Sintactico(new Lexico(new BufferedReader(new FileReader(entrada)))).parse();
-            
-            AST arbol = Sintactico.arbol;
+            AST arbol = st.arbol;
             if (arbol != null) {
                 arbol.ejecutar();
             }
         } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage());            
             JOptionPane.showMessageDialog(null, "Error en el archivo", "Ocurrion un Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
+            System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Error en el parser\n"+ex.getMessage(), "Ocurrion un Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BpruebaActionPerformed

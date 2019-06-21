@@ -16,9 +16,12 @@ import java.util.LinkedList;
  * @author p_ab1
  */
 public class DoWhile extends Condicion implements Instruccion{
-
+    int linea;
+    int col;
     public DoWhile(LinkedList<NodoAST> ins, Expresion cond) {
         super(ins, cond);
+//        this.linea = fila;
+//this.col = col;
     }
 
     @Override

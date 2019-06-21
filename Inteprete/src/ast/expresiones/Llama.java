@@ -24,18 +24,18 @@ public class Llama implements Expresion{
     int linea;
     int col;
 
-    public Llama(String id, LinkedList<NodoAST> valores,int fila,int col) {
+    public Llama(String id, LinkedList<NodoAST> valores) {
         this.id = id;
         this.valores = valores;
-        this.linea = fila;
-        this.col = col;
+//        this.linea = fila;
+//        this.col = col;
     }
 
-    public Llama(String id,int fila,int col) {
+    public Llama(String id) {
         this.id = id;
         this.valores = new LinkedList();
-        this.linea = fila;
-        this.col = col;            
+//        this.linea = fila;
+//        this.col = col;            
     }       
     //2 constructores
     

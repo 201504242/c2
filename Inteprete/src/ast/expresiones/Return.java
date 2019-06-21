@@ -18,18 +18,18 @@ public class Return implements Expresion {
     private Expresion valorDeRetorno;
         int linea;
     int col;
-    public Return(Expresion valorDeRetorno,int fila,int col)
+    public Return(Expresion valorDeRetorno)
         {
-            this.linea = fila;
-this.col = col;
+//            this.linea = fila;
+//this.col = col;
             this.valorDeRetorno = valorDeRetorno;
             retornoVoid = false;
         }
      
-    public Return(int fila,int col)
+    public Return()
         {
-            this.linea = fila;
-this.col = col;
+//            this.linea = fila;
+//this.col = col;
             retornoVoid = true;
         }
      public boolean isRetornoVoid()

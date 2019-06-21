@@ -21,11 +21,11 @@ public class generarArrreglo implements Expresion{
     private Tipo tipoDer;
     int linea;
     int col;
-    public generarArrreglo(LinkedList<Expresion> listaDimensiones, Tipo tipoDer,int fila,int col) {
+    public generarArrreglo(LinkedList<Expresion> listaDimensiones, Tipo tipoDer) {
         this.listaDimensiones = listaDimensiones;
         this.tipoDer = tipoDer;
-        this.linea = fila;
-        this.col = col;
+//        this.linea = fila;
+//        this.col = col;
     }    
     
     @Override

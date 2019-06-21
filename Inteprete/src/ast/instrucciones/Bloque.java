@@ -22,6 +22,8 @@ public class Bloque implements Instruccion  {
 
     public Bloque(LinkedList<NodoAST> nodos) {
         this.nodos = nodos;
+//        this.linea = fila;
+//this.col = col;
     }
     
     public Bloque(NodoAST nodo) {

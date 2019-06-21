@@ -42,6 +42,8 @@ public class Funcion extends Simbolo implements Instruccion{
         this.modificadores = modificadores;
         this.parametrosFormales = parametrosFormales;
         this.dim = dim;
+//        this.linea = fila;
+//this.col = col;
     }
     
     public Funcion(String identificador,Rol rol,Tipo tipo,LinkedList<Modificador> modificadores, int dim) {
@@ -49,6 +51,8 @@ public class Funcion extends Simbolo implements Instruccion{
         this.modificadores = modificadores;
         this.parametrosFormales = new LinkedList();
         this.dim = dim;
+//        this.linea = fila;
+//this.col = col;
     }
    
     

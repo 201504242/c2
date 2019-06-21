@@ -23,10 +23,10 @@ public class IniciarArreglo implements Expresion{
     LinkedList<NodoAST> lista;
 
 
-    public IniciarArreglo(LinkedList<NodoAST> lista,int fila,int col) {
+    public IniciarArreglo(LinkedList<NodoAST> lista) {
         this.lista = lista;
-        this.linea = fila;
-        this.col = col;
+//        this.linea = fila;
+//        this.col = col;
     }
     
     @Override

@@ -25,6 +25,8 @@ public class Println implements Instruccion{
     }
     public Println(Expresion valor) {
         this.valor = valor;
+//        this.linea = fila;
+//this.col = col;
     }
     
     

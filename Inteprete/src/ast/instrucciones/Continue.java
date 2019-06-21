@@ -16,14 +16,10 @@ public class Continue implements Instruccion{
     int linea;
     int col;
 
-    public Continue(int linea, int col) {
-        this.linea = linea;
-        this.col = col;
-    }
-
     public Continue() {
+//        this.linea = linea;
+//        this.col = col;
     }
-
     
     @Override
     public int columana() {

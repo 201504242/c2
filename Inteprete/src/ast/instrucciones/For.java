@@ -33,6 +33,8 @@ public class For extends Condicion implements Instruccion{
         super(instrucciones, cond);
         this.inicializacion = inicializacion;
         this.incremento = incremento;
+//        this.linea = fila;
+//this.col = col;
     }
 
     public Instruccion getInicializacion() {

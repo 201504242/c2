@@ -27,21 +27,22 @@ public class Identificador implements Expresion{
     boolean isAssign;
     
     //b ;
-    public Identificador(String val,boolean isAssign,int fila,int col) {
+    public Identificador(String val,boolean isAssign) {
         this.val = val;
         this.lista = null;
         this.isAssign = isAssign;
-        this.linea = fila;
-        this.col = col;
+//        this.linea = fila;
+//        this.col = col;
     }
     //arreglo[E][E][E]
-    public Identificador(String val,LinkedList<Expresion> lista,boolean isAssign,int fila,int col) {
+    public Identificador(String val,LinkedList<Expresion> lista,boolean isAssign) {
         this.val = val;
         this.lista = lista;
-        this.linea = fila;
-        this.col = col;
+//        this.linea = fila;
+//        this.col = col;
         this.isAssign = isAssign;
     }
+
     
     @Override
     public Tipo getTipo(Entorno ent) {
