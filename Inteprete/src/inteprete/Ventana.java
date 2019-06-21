@@ -6,8 +6,26 @@
 package inteprete;
 
 import ast.AST;
+import ast.Nativo.Modificador;
+import ast.expresiones.Instancia;
+import ast.expresiones.Var;
+import ast.general.Expresion;
+import ast.general.Instruccion;
+import ast.general.NodoAST;
+import ast.instrucciones.Asignacion;
+import ast.instrucciones.Clase;
+import ast.instrucciones.Condicion;
+import ast.instrucciones.Constructor;
+import ast.instrucciones.Declaracion;
+import ast.instrucciones.For;
+import ast.instrucciones.Funcion;
+import ast.instrucciones.If;
+import ast.instrucciones.Print;
+import ast.instrucciones.Println;
+import entorno.Simbolo;
 import static inteprete.Inteprete.v;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +55,9 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 public class Ventana extends javax.swing.JFrame {
     String nombreArchivo="compi";
     ArrayList<String> listaArchivos = new ArrayList();
-    /**
+    int cont=0;
+    AST arbol;
+    /*
      * Creates new form Ventana
      */
     public Ventana() {
@@ -75,6 +96,7 @@ public class Ventana extends javax.swing.JFrame {
         guardarComo = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         reporteEntorno = new javax.swing.JMenuItem();
+        ReporteAST = new javax.swing.JMenuItem();
 
         jLabel1.setText("jLabel1");
 
@@ -172,6 +194,14 @@ public class Ventana extends javax.swing.JFrame {
         });
         jMenu1.add(reporteEntorno);
 
+        ReporteAST.setText("AST");
+        ReporteAST.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReporteASTActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ReporteAST);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -204,10 +234,13 @@ public class Ventana extends javax.swing.JFrame {
             Sintactico st = new Sintactico(lx);
             st.parse();
             
-            AST arbol = st.arbol;
+            arbol = st.arbol;
             if (arbol != null) {
                 arbol.ejecutar();
             }
+            
+            
+            
         } catch (FileNotFoundException ex) {
             System.err.println(ex.getMessage());            
             JOptionPane.showMessageDialog(null, "Error en el archivo", "Ocurrion un Error", JOptionPane.ERROR_MESSAGE);
@@ -303,6 +336,18 @@ public class Ventana extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_reporteEntornoActionPerformed
 
+    private void ReporteASTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteASTActionPerformed
+        // TODO add your handling code here:
+        if (arbol != null) {
+            Graficar(arbol,"AST");
+            JOptionPane.showMessageDialog(null, "AST generado Correctamente", "EXITO~~~!", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "AST VACIO", "Ocurrion un Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_ReporteASTActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -342,6 +387,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton Bprueba;
     private javax.swing.JTextArea Consola;
     private javax.swing.JButton Correr;
+    private javax.swing.JMenuItem ReporteAST;
     private javax.swing.JMenu crear;
     private javax.swing.JMenuItem guardar;
     private javax.swing.JMenuItem guardarComo;
@@ -365,6 +411,7 @@ public class Ventana extends javax.swing.JFrame {
         sp.setFoldIndicatorEnabled(true);
         sp.setIconRowHeaderEnabled(true);
         sp.setLineNumbersEnabled(true);
+  
         cp.add(sp);
         return cp;
     }
@@ -392,5 +439,179 @@ public class Ventana extends javax.swing.JFrame {
     
     public void agregarConsolaln(String cad){
         Consola.setText(Consola.getText()+""+ cad + "\n");
+    }
+
+    private void Graficar(AST arbol,String nombreArchivo) {
+        try {
+            FileWriter fichero = null;
+            PrintWriter pw = null;
+            String nombre = nombreArchivo;
+            String archivo = nombre + ".dot";
+            fichero = new FileWriter(archivo);
+            pw = new PrintWriter(fichero);
+            pw.println("digraph G {node[shape=box, style=filled, color=Gray95]; edge[color=blue];rankdir=UD \n");
+            
+            String cad = "\n";
+            
+            for (NodoAST ins : arbol.getInstrucciones()) {
+                cad += "\"AST\" -> "+recorrido(ins);
+                cad += ";\n";
+            }
+            cad += "}";
+            pw.println(cad);
+            fichero.close();
+            
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+        try{
+            String dotPath = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+            //path del archivo creado con el codigo del graphviz que queremos
+            String fileInputPath = nombreArchivo+".dot";
+            //path de salida del grafo, es decir el path de la imagen que vamos a crear con graphviz
+            String fileOutputPath = nombreArchivo+".jpg";
+            //tipo de imagen de salida, en este caso es jpg
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            //recordemos el comando en la consola de windows: C:\Archivos de programa\Graphviz 2.21\bin\dot.exe -Tjpg grafo1.txt -o grafo1.jpg Esto es lo que concatenamos en el vector siguiente:
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec( cmd );
+            
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }
+    }
+
+    private String recorrido(NodoAST ins) {
+        String clase="";
+        String c="";
+
+        if (ins instanceof Clase) {
+            Clase cla = (Clase) ins;
+            clase = "\""+cla.getIdentificador()+"_"+cla.getRol()+" \"->";
+            for (Modificador con : cla.getModificadores()) {
+                c += clase + recorridoMod(con);
+            }
+            for (Funcion fun : cla.getFunciones()) {
+                c += clase + recorridoFun((Funcion)fun);
+            }
+            c += "\n";
+            for (Constructor con : cla.getConstructores()) {
+                c += clase + recorridoCon(con);
+            }
+            c += "\n";
+            
+            c += "\n";
+            for (Instruccion con : cla.getInstrucciones()) {
+                c += clase + recorridoIns(con);
+            }
+        }
+        return c;
+    }
+    
+    private String recorridoFun(Funcion ins) {
+        String c= "";
+        c = "\" "+ins.getIdentificador()+"_"+ins.getRol()+" \"";
+        c += "\n"+ recorridoFuncion(ins);
+        return c;
+    }
+
+    private String recorridoCon(Constructor ins) {
+        String c= "";
+        c = "\" "+ins.getIdentificador()+"_"+ins.getRol()+" \"";
+        return c;
+    }
+
+    private String recorridoMod(Modificador ins) {
+               String c= "";
+               cont++;
+        c = "\" "+cont+"_"+ins.getTipoMod()+"_"+ins.getClass()+"\"";
+        return c;
+    }
+
+    private String recorridoIns(Instruccion ins) {
+        String c= "";
+        if (ins instanceof Declaracion) {
+            Declaracion d = (Declaracion) ins;
+            if (d.getVars()!= null) {
+                for (Var v : d.getVars()) {
+                c += "\" "+v.getId();
+                }
+                return c +"\"";
+            }           
+            if (d.getValor() instanceof Instancia) {
+                Instancia i = (Instancia) d.getValor();
+                cont++;
+                c = "\" "+cont+"_Instancia \"";
+            }
+            else
+            {
+                JOptionPane.showConfirmDialog(null, d.getClass()+"2");
+            }
+        }
+        else if (ins instanceof If) {
+            cont++;
+            return "\" "+cont+"_If \"";
+        }
+        else if (ins instanceof Println) {
+            cont++;
+            return "\" "+cont+"_Println \"";
+        }
+        else if (ins instanceof Print) {
+            cont++;
+            return "\" "+cont+"_Print \"";
+        }
+        else if (ins instanceof Asignacion) {
+            cont++;
+            return "\" "+cont+"_Asignacion \"";
+        }
+        else if (ins instanceof For) {
+            cont++;
+            return "\" "+cont+"_For \"";
+        }
+        else{
+            JOptionPane.showMessageDialog(null, ins.getClass());
+        }
+        return c;
+    }
+
+    private String recorridoFuncion(Funcion ins) {
+        String funcion;
+        String c="";
+        funcion = "->\""+ins.getIdentificador()+"_"+ins.getRol()+" \"->";
+        for (Modificador con : ins.getModificadores()) {
+            c += funcion + recorridoMod(con);
+        }
+        for (Simbolo con : ins.getParametrosFormales()) {
+            c += funcion + recorridoPara(con);
+        }
+        for (NodoAST con : ins.getSentencias()) {
+            c += funcion + recorridoSent(con);
+        }
+        return c;
+    }
+
+    private String recorridoPara(Simbolo ins) {
+        return "\" PARAMETRO_"+ins.getIdentificador()+"_"+ins.getRol()+"\"";
+    }
+
+    private String recorridoSent(NodoAST con) {
+        if (con instanceof Instruccion) {
+            return recorridoIns((Instruccion)con);
+        }
+        else{
+            return recorridoExp((Expresion)con);
+        }
+    }
+
+    private String recorridoExp(Expresion expresion) {
+        cont++;
+        return "\" "+cont+"Exp\"";
     }
 }

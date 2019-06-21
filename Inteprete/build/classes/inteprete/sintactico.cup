@@ -45,6 +45,8 @@ import ast.expresiones.AccesoAsig;
 import ast.instrucciones.Println;
 import ast.instrucciones.Continue;
 import ast.instrucciones.DoWhile;
+import ast.Nativo.NodoGraf;
+
 parser code
 {:
 public static AST arbol;

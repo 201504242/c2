@@ -1,0 +1,26 @@
+digraph G {node[shape=box, style=filled, color=Gray95]; edge[color=blue];rankdir=UD 
+
+
+"AST" -> "Recursion_CLASE "->" 1_PUBLIC_class ast.Nativo.Modificador""Recursion_CLASE "->" factorial_FUNCION "
+->"factorial_FUNCION "->" PARAMETRO_n_VARIABLE"->"factorial_FUNCION "->" 2Exp""Recursion_CLASE "->" potencia_FUNCION "
+->"potencia_FUNCION "->" PARAMETRO_base_VARIABLE"->"potencia_FUNCION "->" PARAMETRO_exp_VARIABLE"->"potencia_FUNCION "->" 3Exp""Recursion_CLASE "->" mcd_FUNCION "
+->"mcd_FUNCION "->" 4_PUBLIC_class ast.Nativo.Modificador"->"mcd_FUNCION "->" 5_STATIC_class ast.Nativo.Modificador"->"mcd_FUNCION "->" PARAMETRO_n1_VARIABLE"->"mcd_FUNCION "->" PARAMETRO_n2_VARIABLE"->"mcd_FUNCION "->" 6_If ""Recursion_CLASE "->" fibonacci_FUNCION "
+->"fibonacci_FUNCION "->" PARAMETRO_n_VARIABLE"->"fibonacci_FUNCION "->" 7_If "->"fibonacci_FUNCION "->" 8Exp""Recursion_CLASE "->" Hanoi_FUNCION "
+->"Hanoi_FUNCION "->" PARAMETRO_discos_VARIABLE"->"Hanoi_FUNCION "->" PARAMETRO_origen_VARIABLE"->"Hanoi_FUNCION "->" PARAMETRO_auxiliar_VARIABLE"->"Hanoi_FUNCION "->" PARAMETRO_destino_VARIABLE"->"Hanoi_FUNCION "->" PARAMETRO_result_VARIABLE"->"Hanoi_FUNCION "->" 9_If ""Recursion_CLASE "->" particion_FUNCION "
+->"particion_FUNCION "->" PARAMETRO_arreglo_ARREGLO"->"particion_FUNCION "->" PARAMETRO_bajo_VARIABLE"->"particion_FUNCION "->" PARAMETRO_alto_VARIABLE"->"particion_FUNCION "->" pivote"->"particion_FUNCION "->" i"->"particion_FUNCION "->" 10_For "->"particion_FUNCION "->" temp"->"particion_FUNCION "->" 11_Asignacion "->"particion_FUNCION "->" 12_Asignacion "->"particion_FUNCION "->" 13Exp""Recursion_CLASE "->" quickSort_FUNCION "
+->"quickSort_FUNCION "->" PARAMETRO_arreglo_ARREGLO"->"quickSort_FUNCION "->" PARAMETRO_bajo_VARIABLE"->"quickSort_FUNCION "->" PARAMETRO_alto_VARIABLE"->"quickSort_FUNCION "->" 14_If ""Recursion_CLASE "->" imprimirArreglo_FUNCION "
+->"imprimirArreglo_FUNCION "->" PARAMETRO_arreglo_ARREGLO"->"imprimirArreglo_FUNCION "->" PARAMETRO_length_VARIABLE"->"imprimirArreglo_FUNCION "->" 15_For "->"imprimirArreglo_FUNCION "->" 16_Println ""Recursion_CLASE "->" hofstaderFemenina_FUNCION "
+->"hofstaderFemenina_FUNCION "->" PARAMETRO_n_VARIABLE"->"hofstaderFemenina_FUNCION "->" 17_If ""Recursion_CLASE "->" hofstaderMasculino_FUNCION "
+->"hofstaderMasculino_FUNCION "->" PARAMETRO_n_VARIABLE"->"hofstaderMasculino_FUNCION "->" 18_If ""Recursion_CLASE "->" par_FUNCION "
+->"par_FUNCION "->" PARAMETRO_nump_VARIABLE"->"par_FUNCION "->" 19_If "->"par_FUNCION "->" 20Exp""Recursion_CLASE "->" impar_FUNCION "
+->"impar_FUNCION "->" PARAMETRO_numi_VARIABLE"->"impar_FUNCION "->" 21_If "->"impar_FUNCION "->" 22Exp""Recursion_CLASE "->" ackermann_FUNCION "
+->"ackermann_FUNCION "->" PARAMETRO_m_VARIABLE"->"ackermann_FUNCION "->" PARAMETRO_n_VARIABLE"->"ackermann_FUNCION "->" 23_If "
+
+
+;
+"AST" -> "Main_CLASE "->" 24_PRIVATE_class ast.Nativo.Modificador""Main_CLASE "->" main_MAIN "
+->"main_MAIN "->" 25_PUBLIC_class ast.Nativo.Modificador"->"main_MAIN "->" 26_Println "->"main_MAIN "->" 27_Instancia "->"main_MAIN "->" notas_recursion"->"main_MAIN "->" 28_Println "->"main_MAIN "->" 29_If "->"main_MAIN "->" 30_Println "->"main_MAIN "->" 31_If "->"main_MAIN "->" 32_Println "->"main_MAIN "->" 33_If "->"main_MAIN "->" 34_Println "->"main_MAIN "->" 35_If "->"main_MAIN "->" 36_Println "->"main_MAIN "->" 37_If "->"main_MAIN "->" 38_Println "->"main_MAIN "->" 39_If "->"main_MAIN "->" 40_Println "->"main_MAIN "->" 41_If "->"main_MAIN "->" 42_If "->"main_MAIN "->" 43_Println "->"main_MAIN "->" 44_For "
+
+
+;
+}
