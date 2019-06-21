@@ -1014,6 +1014,7 @@ public class Sintactico extends java_cup.runtime.lr_parser {
 
 
 public static AST arbol;
+public static int cont = 0;
 
     /**Metodo al que se llama automáticamente ante algún error sintactico.*/
     public void syntax_error(Symbol s){
@@ -1291,6 +1292,8 @@ class CUP$Sintactico$actions {
 		int cright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
 		LinkedList<NodoAST> c = (LinkedList<NodoAST>)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
 		
+        System.out.println("fila "+bleft + " col "+bright);
+        System.out.println("fila "+cleft + " col "+cright);
         LinkedList<Instruccion> declaraciones = new LinkedList();
         LinkedList<Funcion> funciones =new LinkedList();
         LinkedList<Constructor> constructores = new LinkedList();
@@ -2824,7 +2827,10 @@ class CUP$Sintactico$actions {
 		int bleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
 		Expresion b = (Expresion)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
-		RESULT = new Aritmetica(a, b, Operador.SUMA);
+		
+ System.out.println("afila "+aleft + " col "+aright);
+        System.out.println("afila "+bleft + " col "+bright);
+RESULT = new Aritmetica(a, b, Operador.SUMA);
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;

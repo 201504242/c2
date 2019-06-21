@@ -21,9 +21,11 @@ public class OperadorPost implements Expresion{
     boolean suma;
     int linea;
     int col;
-    public OperadorPost(Identificador id, boolean suma) {
+    public OperadorPost(Identificador id, boolean suma,int fila,int col) {
         this.id = id;
         this.suma = suma;
+        this.linea = fila;
+        this.col = col;
     }
     
     @Override

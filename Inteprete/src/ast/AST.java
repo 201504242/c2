@@ -68,6 +68,7 @@ public class AST {
                     global.agregar(funcion.getIdentificador(), funcion);
                 }
                 for (NodoAST nodoAST : c.getInstrucciones()) {
+                    
                     if (nodoAST instanceof Instruccion) 
                     {
                         Object restul = ((Instruccion)nodoAST).ejecutar(global);

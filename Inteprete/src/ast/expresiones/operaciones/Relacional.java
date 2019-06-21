@@ -17,8 +17,10 @@ import java.util.Objects;
 public class Relacional extends Operacion{
     int linea;
     int col;
-    public Relacional(Expresion op1, Expresion op2, Operador operador) {
+    public Relacional(Expresion op1, Expresion op2, Operador operador,int fila,int col) {
         super(op1, op2, operador);
+        this.linea = fila;
+this.col = col;
     }
 
     @Override

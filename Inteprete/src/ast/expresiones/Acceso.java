@@ -25,9 +25,12 @@ public class Acceso implements Expresion{
     int linea;
     int col;
 
-    public Acceso(Expresion o1, Expresion o2) {
+    public Acceso(Expresion o1, Expresion o2,int fila,int col) {
         this.o1 = o1;
         this.o2 = o2;
+        this.linea = fila;
+        this.col = col;
+        
     }     
     
     @Override

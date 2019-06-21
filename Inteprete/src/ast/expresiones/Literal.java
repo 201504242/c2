@@ -19,9 +19,11 @@ public class Literal implements Expresion{
     int linea;
     int col;
 
-    public Literal(Object valor, Tipo tipo) {
+    public Literal(Object valor, Tipo tipo,int fila,int col) {
         this.valor = valor;
         this.tipo = tipo;
+        this.linea = fila;
+        this.col = col;
     }
     
     @Override

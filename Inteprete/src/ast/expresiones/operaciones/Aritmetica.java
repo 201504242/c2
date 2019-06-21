@@ -17,8 +17,10 @@ import entorno.Tipo.Tipos;
 public class Aritmetica extends Operacion{
     int linea;
     int col;
-    public Aritmetica(Expresion op1, Expresion op2, Operador operador) {
+    public Aritmetica(Expresion op1, Expresion op2, Operador operador,int fila,int col) {
         super(op1, op2, operador);
+        this.linea = fila;
+        this.col = col;
     }
 
     @Override

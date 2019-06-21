@@ -13,4 +13,6 @@ package ast.general;
 public interface NodoAST{
     int linea();
     int columana();
+    
+    
 }

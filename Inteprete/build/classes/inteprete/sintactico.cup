@@ -229,6 +229,8 @@ VARIABLE_INICIALIZAR ::=
 
 CLASE ::= MODIFICADORES_NULL:a Tclass ID:b llavea ELEMENTOS_CLASE:c llavec
     {:
+        System.out.println("fila "+bleft + " col "+bright);
+        System.out.println("fila "+cleft + " col "+cright);
         LinkedList<Instruccion> declaraciones = new LinkedList();
         LinkedList<Funcion> funciones =new LinkedList();
         LinkedList<Constructor> constructores = new LinkedList();
@@ -703,7 +705,10 @@ TIPO ::=
 
 EXPRESION ::= INI_ARRAY:i                   {:RESULT = i;:}
     |menos EXPRESION                        {:RESULT=null;:}%prec UMENOS    
-    | EXPRESION:a mas EXPRESION:b           {:RESULT = new Aritmetica(a, b, Operador.SUMA);:}
+    | EXPRESION:a mas EXPRESION:b           {:
+ System.out.println("afila "+aleft + " col "+aright);
+        System.out.println("afila "+bleft + " col "+bright);
+RESULT = new Aritmetica(a, b, Operador.SUMA);:}
     | EXPRESION:a menos EXPRESION:b         {:RESULT = new Aritmetica(a, b, Operador.RESTA);:}
     | EXPRESION:a por EXPRESION:b           {:RESULT = new Aritmetica(a, b, Operador.MULTIPLICACION);:}
     | EXPRESION:a div EXPRESION:b           {:RESULT = new Aritmetica(a, b, Operador.DIVISION);:}

@@ -27,15 +27,19 @@ public class Identificador implements Expresion{
     boolean isAssign;
     
     //b ;
-    public Identificador(String val,boolean isAssign) {
+    public Identificador(String val,boolean isAssign,int fila,int col) {
         this.val = val;
         this.lista = null;
         this.isAssign = isAssign;
+        this.linea = fila;
+        this.col = col;
     }
     //arreglo[E][E][E]
-    public Identificador(String val,LinkedList<Expresion> lista,boolean isAssign) {
+    public Identificador(String val,LinkedList<Expresion> lista,boolean isAssign,int fila,int col) {
         this.val = val;
         this.lista = lista;
+        this.linea = fila;
+        this.col = col;
         this.isAssign = isAssign;
     }
     
