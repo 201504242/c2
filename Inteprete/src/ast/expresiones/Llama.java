@@ -100,8 +100,11 @@ public class Llama implements Expresion{
     }
 
     private boolean verificar(LinkedList<NodoAST> valores, LinkedList<Simbolo> formales, Entorno local,Entorno ent) {
+        
         if (formales.size() == valores.size()) 
             { //2)rrecorrer los formales y comparar con los actuales
+                
+                ent.setHeredado(null);
                 Simbolo sim_aux;
                 String id_aux;
                 Tipos tipoPar_aux = null;
@@ -113,7 +116,7 @@ public class Llama implements Expresion{
                 {//JARLO DE LA TABLA DE SIMBOLOS
                     sim_aux = formales.get(i);
                     id_aux = sim_aux.getIdentificador();
-                    tipoPar_aux = sim_aux.getTipo().getTipoPrimitivo();                    
+                    tipoPar_aux = sim_aux.getTipo().getTipoPrimitivo();    
                     exp_aux = (Expresion)valores.get(i);
                     tipoVal = exp_aux.getTipo(ent).getTipoPrimitivo();
                     v = exp_aux.getValorImplicito(ent);                                        
@@ -131,6 +134,7 @@ public class Llama implements Expresion{
                     Simbolo loca = datos.get(i);
                     local.agregar(loca.getIdentificador(), loca);
                 }
+                ent.setHeredado(local);
             }else{
                 System.out.println("ERROR parametros formales ");
             }
